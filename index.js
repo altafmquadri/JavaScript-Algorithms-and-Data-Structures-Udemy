@@ -168,3 +168,89 @@ const refactoredMaxSubarraySum = (arr, num) => {
 // console.log(refactoredMaxSubarraySum([4,2,1,6,2], 4))
 // console.log(refactoredMaxSubarraySum([], 4))
 
+/*                        Divide and conquer 
+Pattern involves dividing a data set into smaller chunks and then repeating a process with a
+subset of data, this pattern can tremendously decrease time complexity */
+
+//example with a sorted array
+
+// given an array of integers, write a function that returns the index of that number
+// if not found return -1
+
+//naive solution
+
+const search = (arr, val) => {
+  for (let i = 0; i < arr.length; i++) {
+    if(arr[i] === val) return i
+  }
+  return -1
+}
+
+// console.log(search([5,6,7,8,15,20], 20))
+
+//binary search is an example of divide and conquer
+
+
+/* Write a function called sameFrequency
+Given two positive integers, find out if the two numbers have the same frequency of digits */
+
+const sameFrequency = (num1, num2) => {
+  // 1. split the numbers
+  let nums1 = num1.toString().split('')
+  let nums2 = num2.toString().split('')
+  let numbers1 = {}
+  let numbers2 = {}
+
+  // 2. if numbers not the same length return
+  if (nums1.length !== nums2.length) return false
+
+  // 3. count the numbers and store them in a hash
+  for (let num of nums1) {
+    numbers1[num] = (numbers1[num] || 0) + 1
+  }
+  for (let num of nums2) {
+    numbers2[num] = (numbers2[num] || 0) + 1
+  }
+  
+  // 4. compare the keys and see if they are in both 
+  for (let key in numbers1) {
+    if (!(key in numbers2)) {
+      return false
+    }
+    if (numbers2[key] !== numbers1[key]) {
+      return false
+    }
+  }
+  return true
+}
+
+// console.log(sameFrequency(182, 281))
+// console.log(sameFrequency(34, 14))
+// console.log(sameFrequency(3589578, 5879385))
+// console.log(sameFrequency(21, 26))
+
+
+/* Implement a function called, areThereDuplicates which accepts a 
+variable number of arguments, and checks whether there are any duplicates among the arguments passed in 
+You can solve this using the frequency counter pattern OR the multiple pointers pattern */
+
+const areThereDuplicates = (...args) => {
+  args = args.toString().split(',').sort((a, b)=> a.localeCompare(b))
+  console.log(args)
+  let left = 0
+  let right = left + 1
+  while (right < args.length) {
+    if (args[left] === args[right] && left !== right)  {
+      return true
+    } else {
+      left++
+      right++
+    }
+  }
+  return false
+}
+
+
+
+console.log(areThereDuplicates('a', 'b', 'c', 'a'))
+console.log(areThereDuplicates(1,2,5,8,10,11,12,15,15))
