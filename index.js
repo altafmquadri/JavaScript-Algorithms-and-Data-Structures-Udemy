@@ -235,12 +235,15 @@ variable number of arguments, and checks whether there are any duplicates among 
 You can solve this using the frequency counter pattern OR the multiple pointers pattern */
 
 const areThereDuplicates = (...args) => {
-  args = args.toString().split(',').sort((a, b)=> a.localeCompare(b))
-  console.log(args)
+  // 1. use spread operator in parameter to make args an array
+  // 2. make parameters a string to do a comparison via localCompare
+  args = args.toString().split(',').sort((a, b) => a.localeCompare(b))
+  // 3. set multiple pointers
   let left = 0
   let right = left + 1
   while (right < args.length) {
-    if (args[left] === args[right] && left !== right)  {
+    // 4. check comparison
+    if (args[left] === args[right])  {
       return true
     } else {
       left++
@@ -250,7 +253,89 @@ const areThereDuplicates = (...args) => {
   return false
 }
 
+//alternate solution using frequency counter
+
+const areThereDuplicatesFC = (...args) => {
+  let argObj = {}
+  for (el of args) {
+    argObj[el] = (argObj[el] || 0) + 1
+    console.log(argObj)
+    if (argObj[el] > 1) return true
+  }
+  return false
+}
+
+// console.log(areThereDuplicates('a', 'b', 'c', 'a'))
+// console.log(areThereDuplicates(1,2,5,8,10,11,12,15,15))
+// console.log(areThereDuplicates(1,2,3))
+// console.log(areThereDuplicates(1,2,2))
+
+// console.log(areThereDuplicatesFC('a', 'b', 'c', 'a'))
+// console.log(areThereDuplicatesFC(1,2,5,8,10,11,12,15,15))
+// console.log(areThereDuplicatesFC(1,2,5,8,10,11,12,16,15))
+// console.log(areThereDuplicatesFC(1,2,3))
+// console.log(areThereDuplicatesFC(1,2,2))
+
+/* Write a function called averagePair 
+Given a sorted array of integers and a target average, determine 
+if there is a pair of values in the array where the average of the 
+pair equals the target average. There may be more than one pair that 
+matches the average target */
+
+const averagePair = (arr, target) => {
+  let left = 0
+  let right = arr.length - 1
+  let average
+
+  while (left < right) {
+    average = (arr[left] + arr[right]) / 2
+    if (average === target) return true
+    // 1. if average is less than the target we have to move our left 
+    //    to increase the average
+    else if (average < target) {
+      left++
+      // 2. if the average is greater than target we have to move our right back
+      //    to lower the average
+    } else {
+      right--
+    }
+  }
+  return false
+}
+
+// console.log(averagePair([1,2,3], 2.5))
+// console.log(averagePair([1,3,3,5,6,7,10,12,19], 8))
 
 
-console.log(areThereDuplicates('a', 'b', 'c', 'a'))
-console.log(areThereDuplicates(1,2,5,8,10,11,12,15,15))
+/* Write a function called isSubsequence  which takes in two strings and checks 
+whether the characters in the first string form a subsequence of the characters 
+in the second string. In other words, the function should check whether the 
+characters in the first string appear somewhere in the second string  without
+their order changing */
+
+const isSubsequence = (string1, string2) => {
+  // 1. take string and convert to array
+  let array1 = string1.split('')
+  let array2 = string2.split('')
+  let combinedArray = [...array1, ...array2]
+
+  // 2. take combined arrays start from beginning of the array for left pointer
+  //    start at the length of 1st array as this is the beginning of the second array
+  let left = 0
+  let right = array1.length
+
+  // console.log(combinedArray[left], combinedArray[right])
+
+  // 3. set bounds for both left and right pointers
+  while (right < combinedArray.length) {
+    if (combinedArray[left] === combinedArray[right]) left++
+    if (left === array1.length) return true
+    right++
+    console.log(combinedArray[left], combinedArray[right])
+  }
+  return false
+}
+
+console.log(isSubsequence('abc', 'abracadabra'))
+console.log(isSubsequence('abc', 'acb'))
+console.log(isSubsequence('sing', 'sting'))
