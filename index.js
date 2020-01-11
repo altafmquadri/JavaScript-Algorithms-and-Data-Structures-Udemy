@@ -118,23 +118,23 @@ and a new window is created, useful for keeping track of a subset of data in an 
 
 //naive solution
 
-const maxSubarraySum = (arr, num) => {
-  if (num > arr.length) return null
+// const maxSubarraySum = (arr, num) => {
+//   if (num > arr.length) return null
 
-  let max = -Infinity
+//   let max = -Infinity
 
-  for (let i = 0; i < arr.length - num + 1; i++) {
-    temp = 0
-    for (let j = 0; j < num; j++) {
-      temp += arr[i + j]
-    }
-    if (temp > max) {
-      max = temp
-    }
-    console.log(temp, max)
-  }
-  return max
-}
+//   for (let i = 0; i < arr.length - num + 1; i++) {
+//     temp = 0
+//     for (let j = 0; j < num; j++) {
+//       temp += arr[i + j]
+//     }
+//     if (temp > max) {
+//       max = temp
+//     }
+//     console.log(temp, max)
+//   }
+//   return max
+// }
 
 // console.log(maxSubarraySum([2,6,9,2,1,8,5,6,3], 3))
 // console.log(maxSubarraySum([1,2,5,2,8,1,5], 2))
@@ -336,6 +336,115 @@ const isSubsequence = (string1, string2) => {
   return false
 }
 
-console.log(isSubsequence('abc', 'abracadabra'))
-console.log(isSubsequence('abc', 'acb'))
-console.log(isSubsequence('sing', 'sting'))
+// console.log(isSubsequence('abc', 'abracadabra'))
+// console.log(isSubsequence('abc', 'acb'))
+// console.log(isSubsequence('sing', 'sting'))
+
+/* Given an array of integers and a number, write a function called maxSubarraySum
+which finds the maximum sum of a subarray with the length of the number passed to the function
+Note that a subarray must consist of consecutive  elements from the original array 
+In the first example below, [100, 200, 300] is a subarray of the original array, but [100, 300] is not */
+
+const maxSubarraySum = (arr, range) => {
+  // 1. declare the window
+  if (range > arr.length) return null
+  let temp = 0
+  let max = 0
+  // 2. get the max of the first iteration
+  for (let i = 0; i < range; i++) {
+    max += arr[i]
+  }
+  // 3. do a comparison from max to temp by iterating till the end
+  temp = max
+  // 4. set new iteration with temp, add the new arr and subtract the old arr in the window
+  for (let i = range; i < arr.length; i++) {
+    temp = temp + arr[i] - arr[i - range]
+    max = Math.max(temp, max)
+  }
+return max
+}
+
+// console.log(maxSubarraySum([100, 200, 300, 400], 2))
+// console.log(maxSubarraySum([1, 4, 2, 10, 23, 3, 1, 0 , 20], 4))
+// console.log(maxSubarraySum([-3, 4, 0, -2, 6, -1], 2))
+// console.log(maxSubarraySum([3, -2, 7, -4, 1, -1, 4, -2, 1], 2))
+// console.log(maxSubarraySum([2, 3], 3))
+
+
+/* Write a function called minSubArrayLen  which accepts two parameters - 
+an array of positive integers and a positive integer. 
+This function should return the minimal length of a contiguous  
+subarray of which the sum is greater than or equal to the integer 
+passed to the function. If there isn't one, return 0 instead */
+
+const minSubArrayLen = (arr, num) => {
+  // could not figure out on my own, had to look at solution
+  let sum = 0
+  let left = 0
+  let right = 0
+  let minLen = Infinity
+
+  // broken into two part where sum >= num or sum < num, any other condition break out of loop 
+  while (left < arr.length) {
+    if (sum < num && right < arr.length) {
+      // keep adding until we are at or greater than number
+      sum += arr[right]
+      right++
+    } else if (sum >= num) {
+      // if we are greater than number record lengths and slide the window to subtract that from our total
+      minLen = Math.min(minLen, right - left)
+      sum -= arr[left]
+      left++
+    } else {
+      break;
+    }
+  }
+  // if nothing exists we will return infinity, we should return zero or the min length calculated
+  return minLen === Infinity ? 0 : minLen
+}
+
+
+// console.log(minSubArrayLen([2,3,1,2,4,3], 7)) //2
+// console.log(minSubArrayLen([2,1,6,5,4], 9)) //2
+// console.log(minSubArrayLen([3,1,7,11,2,9,8,21,62,33,19], 52)) //1
+// console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10], 39)) //3
+// console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10], 55)) //5
+// console.log(minSubArrayLen([4,3,3,8,1,2,3], 11)) //2
+// console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10], 95)) //0
+
+
+/* write a function findLongestSubstring, which accepts a string and returns the length of the longest 
+substring with all distinct characters */
+
+findLongestSubstring = (phrase) => {
+  // could not figure this out on my own, looked at solution
+  let longest = 0
+  let index = 0
+  let seen = {}
+
+  // 1. loop through the letters of the word or phrase
+  for (let i = 0; i < phrase.length; i++) {
+    let letter = phrase[i]
+    //store the index of where the same letter is seen again
+    if (seen[letter]) {
+      index = Math.max(index, seen[letter])
+    }
+    // beggining of substring + 1 to include in the count
+    longest = Math.max(longest, i - index + 1)
+    // store the index of the next letter so as to not double count
+    seen[letter] = i + 1
+  }
+  return longest
+}
+
+
+
+
+// console.log(findLongestSubstring('')) //0
+// console.log(findLongestSubstring('rithmschool')) //7
+// console.log(findLongestSubstring('thisisawesome')) //6
+// console.log(findLongestSubstring('thecatinthehat')) //7
+// console.log(findLongestSubstring('bbbbbb')) //1
+// console.log(findLongestSubstring('longestsubstring')) //8
+// console.log(findLongestSubstring('thisishowwedoit')) //6
+
