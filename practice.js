@@ -95,3 +95,58 @@ substring with all distinct characters */
 // console.log(findLongestSubstring('bbbbbb')) //1
 // console.log(findLongestSubstring('longestsubstring')) //8
 // console.log(findLongestSubstring('thisishowwedoit')) //6
+
+
+//Recursive coding exercises
+
+/* Write a function called power which accepts a base and an exponent. 
+The function should return the power of the base to the exponent. 
+This function should mimic the functionality of Math.pow */
+
+
+// console.log(power(2,0))
+// console.log(power(2,2))
+// console.log(power(2,4))
+
+/* Write a function factorial which accepts a number and returns 
+the factorial of that number. A factorial is the product of an integer 
+and all the integers below it; e.g., factorial four (4!) is equal to 4*3*2*1 = 24
+factorial zero (0!) = 1 */
+
+
+
+
+// console.log(factorial(1))
+// console.log(factorial(2))
+// console.log(factorial(4))
+// console.log(factorial(7))
+
+
+/* Write a fxn called productOfArray which takes in an array
+of numbers and returns the product of them all */
+
+
+
+// console.log(productOfArray([1,2,3])) // 6
+// console.log(productOfArray([1,2,3,10])) // 60
+
+/* Write a fxn called recursiveRange which accepts a number and 
+add up all the numbers from 0 to the number passed to the function */
+
+
+
+//   console.log(recursiveRange(6)) // 21
+//   console.log(recursiveRange(10)) // 55 
+
+
+/* Write a recursive fxn call fib which acceps a number and returns the
+nth number in the Fibonacci sequence. Recall that the Fibonacci sequence 
+is the sequence of whole numbers 1, 1, 2, 3, 5, 8, ... which starts 
+with 1 and 1, and where every number thereafter is equal to the 
+sum of the previous two numbers. */
+
+
+// fib(4) // 3
+// fib(10) // 55
+// fib(28) // 317811
+// fib(35) // 9227465
