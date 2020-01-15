@@ -781,4 +781,88 @@ const collectStrings = (obj) => {
 
 // console.log(collectStrings(obj)) // ["foo", "bar", "baz"])
 
+/******************************Searches************************************************* */
 
+//exercise 
+/* Write a function called linearSearch  which accepts an array and a value, and returns the 
+index at which the value exists. If the value does not exist in the array, return -1. */
+
+const linearSearch = (arr, val) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === val) return i
+  }
+  return -1
+}
+
+// console.log(linearSearch([10,15,20,25,30], 25))
+
+
+// Binary searches only work on sorted arrays
+// but a much faster solution, it's a divide and conquer solution
+
+/* pseudocode
+    1. fxn accepts a sorted array and a value
+    2. create a left pointer and a right pointer (start, end) of the array
+    3. left < right while looping
+    4. check the middle 
+      a. is middle the value you want, return index
+      b. is middle < value, move left pointer up
+      c. is middle > value, move right pointer down
+      d. if value not found, return -1
+*/ 
+
+/* Write a fxn call binarySearch which accepts a sorterd 
+array and a value and returns the index at which the value 
+exists. Otherwise, return -1. This algorithm should be more 
+efficient than linearSearch - you can read how to implement it here 
+- https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search 
+and here - https://www.topcoder.com/community/data-science/data-science-tutorials/binary-search/ */
+
+
+const binarySearch = (arr, val) => {
+  let left = 0
+  let right = arr.length - 1
+  let middle = Math.floor((left + right)/2)
+
+  while (left <= right) {
+    if (arr[middle] === val) return middle
+    else if (arr[middle] < val) {
+      left = middle + 1
+      middle = Math.floor((right + left)/2)
+      } 
+      else if (arr[middle] > val) {
+        right = middle - 1
+        middle = Math.floor((right + left)/2)
+      }
+    }
+  return -1
+}
+
+// console.log(binarySearch([1,2,3,4,5,6], 6))
+
+
+/* pseudocode 
+write a fxn stringSearch 
+
+  1. loop over the longer string
+  2. loop over the shorter string
+  3. if the characters don't match, break out of the inner loop
+  4. if the characters do match, keep going
+  5. if you complete the inner loop and find a match
+    a. increment the count of matches
+  6. return the count
+*/
+
+const naiveSearch = (str1, str2) => {
+  let count = 0
+  for (let i = 0; i < str1.length; i++) {
+    for (let j = 0; j < str2.length; j++) {
+      console.log(str1[i+j], str2[j])
+      if (str1[i+j] !== str2[j]) break
+      if (j === str2.length-1) count++
+    }
+  }
+  return count 
+}
+
+console.log(naiveSearch('aaaaab', 'aaab'))

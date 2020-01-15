@@ -283,3 +283,35 @@ an array of all the values in the object that have a typeof string */
 // }
 
 // console.log(collectStrings(obj)) // ["foo", "bar", "baz"])
+
+//exercise 
+/* Write a function called linearSearch  which accepts an array and a value, and returns the 
+index at which the value exists. If the value does not exist in the array, return -1. */
+
+
+  
+  // console.log(linearSearch([10,15,20,25,30], 25))
+
+
+// Binary searches only work on sorted arrays
+// but a much faster solution, it's a divide and conquer solution
+
+/* pseudocode
+    1. fxn accepts a sorted array and a value
+    2. create a left pointer and a right pointer (start, end) of the array
+    3. left < right while looping
+    4. check the middle 
+      a. is middle the value you want, return index
+      b. is middle < value, move left pointer up
+      c. is middle > value, move right pointer down
+      d. if value not found, return -1
+*/ 
+
+/* Write a fxn call binarySearch which accepts a sorterd 
+array and a value and returns the index at which the value 
+exists. Otherwise, return -1. This algorithm should be more 
+efficient than linearSearch - you can read how to implement it here 
+- https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search 
+and here - https://www.topcoder.com/community/data-science/data-science-tutorials/binary-search/ */
+
+// console.log(binarySearch([1,2,3,4,5,6], 6))
