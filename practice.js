@@ -301,10 +301,10 @@ index at which the value exists. If the value does not exist in the array, retur
     2. create a left pointer and a right pointer (start, end) of the array
     3. left < right while looping
     4. check the middle 
-      a. is middle the value you want, return index
-      b. is middle < value, move left pointer up
-      c. is middle > value, move right pointer down
-      d. if value not found, return -1
+        a. is middle the value you want, return index
+        b. is middle < value, move left pointer up
+        c. is middle > value, move right pointer down
+        d. if value not found, return -1
 */ 
 
 /* Write a fxn call binarySearch which accepts a sorterd 
@@ -315,3 +315,61 @@ efficient than linearSearch - you can read how to implement it here
 and here - https://www.topcoder.com/community/data-science/data-science-tutorials/binary-search/ */
 
 // console.log(binarySearch([1,2,3,4,5,6], 6))
+
+/* pseudocode 
+write a fxn stringSearch 
+
+1. loop over the longer string
+2. loop over the shorter string
+3. if the characters don't match, break out of the inner loop
+4. if the characters do match, keep going
+5. if you complete the inner loop and find a match
+    a. increment the count of matches
+6. return the count
+*/
+
+
+
+
+// console.log(naiveSearch('aaaaab', 'aaab'))
+
+
+
+/* BubbleSort psudocode (does a swap each time)
+  1. start looping with a variable called i from the end of the
+    aray towards the beginning
+  2. start an inner loop with a variable called j from the beginning
+    until i - 1
+  3. if arr[j] > than arr[j+1], swap those two values
+  4. return the sorted array
+*/
+
+
+// console.log(bubbleSort([5,3,1,2,4]))
+// console.log(bubbleSort([8,1,2,3,4,5,6,7]))
+
+
+/* Selection sort pseudocode (does a swap only when loop is complete)
+  1. store the first element as the smallest value you've seen so far
+  2. compare this item to the next item in the array until you find a smaller number
+  3. if smaller number is found, designate that smaller number to be the new "min"
+  and continue until the end of the array
+  4. if the min is not the value (index) you initially began with, swap the 2 values
+  5. repeat this with the next element until the array is sorted
+*/
+
+
+
+// console.log(selectionSort([19,44,38,5,55,67,72,47,15]))
+
+
+/* Insertion sort pseudocode
+  1. start by picking the second element in the array
+  2. compare second with the one before it and swap if necessary
+  3. continue to the next element and if it is in the incorrect order
+    iterate through the sorted portion to place the element in the correct place
+  4. repeat until the array is sorted
+*/
+
+
+// console.log(insertionSort([3,44,38,5]))

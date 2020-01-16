@@ -865,4 +865,100 @@ const naiveSearch = (str1, str2) => {
   return count 
 }
 
-console.log(naiveSearch('aaaaab', 'aaab'))
+// console.log(naiveSearch('aaaaab', 'aaab'))
+
+/* BubbleSort psudocode (does a swap each time)
+  1. start looping with a variable called i from the end of the
+    aray towards the beginning
+  2. start an inner loop with a variable called j from the beginning
+    until i - 1
+  3. if arr[j] > than arr[j+1], swap those two values
+  4. return the sorted array
+*/
+
+const bubbleSort = (arr) => {
+  let noSwaps // for optimization
+  const swap = (arr, idx1, idx2) => {
+    let temp = arr[idx1]
+    arr[idx1] = arr[idx2]
+    arr[idx2] = temp
+  }
+
+  for (i = arr.length; i > 0; i--) {
+    noSwaps = true
+    for (j=0; j < i - 1; j++) {
+      console.log(arr, arr[j], arr[j+1])
+      if (arr[j] > arr[j+1]) {
+        swap(arr, j, j+1)
+        noSwaps = false
+      }
+    }
+    if(noSwaps) break
+  }
+  return arr
+}
+
+// console.log(bubbleSort([5,3,1,2,4]))
+// console.log(bubbleSort([8,1,2,3,4,5,6,7]))
+
+
+/* Selection sort pseudocode (does a swap only when loop is complete)
+  1. store the first element as the smallest value you've seen so far
+  2. compare this item to the next item in the array until you find a smaller number
+  3. if smaller number is found, designate that smaller number to be the new "min"
+  and continue until the end of the array
+  4. if the min is not the value (index) you initially began with, swap the 2 values
+  5. repeat this with the next element until the array is sorted
+*/
+
+const selectionSort = (arr) => {
+  let newIndex = 0
+  
+  const swap = (arr, idx1, idx2) => {
+    let temp = arr[idx1]
+    arr[idx1] = arr[idx2]
+    arr[idx2] = temp
+  }
+  
+  for (let i=0; i < arr.length; i++) {
+    let min = arr[i]
+    for (let j=i+1; j < arr.length; j++) {
+      if(min > arr[j]) {
+        min = arr[j]
+        newIndex = j
+      }
+    }
+    if (arr[i] !== min) {
+      swap(arr, i, newIndex)
+    }
+  }
+  return arr
+}
+
+// console.log(selectionSort([19,44,38,5,55,67,72,47,15]))
+
+/* Insertion sort pseudocode
+  1. start by picking the second element in the array
+  2. compare second with the one before it and swap if necessary
+  3. continue to the next element and if it is in the incorrect order
+    iterate through the sorted portion to place the element in the correct place
+  4. repeat until the array is sorted
+*/
+
+const insertionSort = (arr) => {
+  for (let i = 1; i < arr.length; i++) {
+    let current = arr[i]
+    let j = i - 1 //to avoid declaring a global variable throughout the whole program
+    console.log(current, 'i am here')
+    for (j; j >= 0 && arr[j] > current; j--) {
+      arr[j+1] = arr[j]
+      console.log('i am j in the loop', j)
+    }
+    arr[j+1] = current
+    console.log('i am j out of the j loop', j)
+  }
+  return arr
+}
+
+console.log(insertionSort([3,44,38,5]))
+
