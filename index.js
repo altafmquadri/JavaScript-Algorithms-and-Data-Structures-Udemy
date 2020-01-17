@@ -949,16 +949,77 @@ const insertionSort = (arr) => {
   for (let i = 1; i < arr.length; i++) {
     let current = arr[i]
     let j = i - 1 //to avoid declaring a global variable throughout the whole program
-    console.log(current, 'i am here')
+    // console.log(current, 'i am here')
     for (j; j >= 0 && arr[j] > current; j--) {
       arr[j+1] = arr[j]
-      console.log('i am j in the loop', j)
+      // console.log('i am j in the loop', j)
     }
     arr[j+1] = current
-    console.log('i am j out of the j loop', j)
+    // console.log('i am j out of the j loop', j)
   }
   return arr
 }
 
-console.log(insertionSort([3,44,38,5]))
+// console.log(insertionSort([3,44,38,5]))
 
+
+/* Pseudocode to merge Arrays
+  1. Create an empty array, take a look at the smallest values in each input array
+  2. While there are still values we haven't looked at...
+  3. If the value in the first array is smaller than the value in the second array, 
+      push the value in the first array into our results and move on to the next value in the first array
+  4. If the value in the first array is larger than the value in the second array, 
+      push the value in the second array into our results and move on to the next value in the second array
+  5. Once we exhaust one array, push in all remaining values from the other array */
+
+  const merge = (arr1, arr2) => {
+    let i = 0
+    let j = 0
+    let newArr = []
+
+    while (i + j < arr1.length + arr2.length) {
+      if (arr1[i] < arr2[j]) {
+        newArr.push(arr1[i])
+        // console.log(newArr)
+        i++; 
+      }
+      else if (arr1[i]> arr2[j]) {
+        newArr.push(arr2[j])
+        // console.log(newArr)
+        j++
+      }
+      else if (arr1[i] === arr2[j]){
+        newArr.push(arr1[i], arr2[j])
+        i++, j++
+      }
+      else if (i === arr1.length) {
+        newArr.push(arr2[j])
+        j++
+      }
+      else if (j === arr2.length) {
+        newArr.push(arr1[i])
+        i++
+      }
+    }
+    return newArr
+  }
+
+  // console.log(merge([5,42,86], [3,15,90,99]))
+  // console.log(merge([1,10,50], [2,14,50,100]))
+  // console.log(merge([], [2,14,50,100]))
+
+  /* mergeSort pseudocode 
+  1. Break up the array into halves until you have arrays that are empty or have one element
+  2. Once you have smaller sorted arrays, merge those arrays with other sorted arrays until 
+    you are back at the full length of the array
+  3. Once the array has been merged back together, return the merged (and sorted!) array */
+
+const mergeSort = (arr) => {
+  if (arr.length <= 1 ) return arr
+  let mid = Math.floor((arr.length)/2)
+  let left = mergeSort(arr.slice(0, mid))
+  let right = mergeSort(arr.slice(mid))
+  return merge(left, right)
+}
+
+console.log(mergeSort([5,42,86,3,15,90, 99]))
