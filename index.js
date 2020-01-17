@@ -1022,4 +1022,4 @@ const mergeSort = (arr) => {
   return merge(left, right)
 }
 
-console.log(mergeSort([5,42,86,3,15,90, 99]))
+// console.log(mergeSort([5,42,86,3,15,90, 99]))

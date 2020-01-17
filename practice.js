@@ -373,3 +373,32 @@ write a fxn stringSearch
 
 
 // console.log(insertionSort([3,44,38,5]))
+
+
+// console.log(insertionSort([3,44,38,5]))
+
+
+/* Pseudocode to merge Arrays
+  1. Create an empty array, take a look at the smallest values in each input array
+  2. While there are still values we haven't looked at...
+  3. If the value in the first array is smaller than the value in the second array, 
+      push the value in the first array into our results and move on to the next value in the first array
+  4. If the value in the first array is larger than the value in the second array, 
+      push the value in the second array into our results and move on to the next value in the second array
+  5. Once we exhaust one array, push in all remaining values from the other array */
+
+  
+
+  // console.log(merge([5,42,86], [3,15,90,99]))
+  // console.log(merge([1,10,50], [2,14,50,100]))
+  // console.log(merge([], [2,14,50,100]))
+
+  /* mergeSort pseudocode 
+  1. Break up the array into halves until you have arrays that are empty or have one element
+  2. Once you have smaller sorted arrays, merge those arrays with other sorted arrays until 
+    you are back at the full length of the array
+  3. Once the array has been merged back together, return the merged (and sorted!) array */
+
+
+
+// console.log(mergeSort([5,42,86,3,15,90, 99]))
