@@ -1149,4 +1149,62 @@ we need a helper function, pivot pseudocode:
     return arr
   }
 
-console.log(quickSort([26,23,27,44,17,47,39,42,43,1]))
+// console.log(quickSort([26,23,27,44,17,47,39,42,43,1]))
+
+
+/* In order to perform a radix sort we need some helpers
+first helper is to return the 1s, 10s, 100s and 1000s place and so on 
+getDigit(number, place) */
+
+const getDigit = (number, place) => {
+  return Math.floor(Math.abs(number) / 10 ** place % 10)
+}
+
+// console.log(getDigit(7323, 2))
+
+/* second helper we need to know the count of numbers 
+digitCount*/
+
+const digitCount = (num) => {
+  if (num === 0) return 1
+  return Math.floor(Math.log10(Math.abs(num))) + 1
+}
+
+/* third helper we need to know the most digits
+mostDigits(nums) - given an array of numbers, return the number of digits
+in the largest numbers in the list 
+digitCount*/
+
+const mostDigits = (nums) => {
+  let maxDigits = 0
+  for (let i=0; i < nums.length; i++) {
+    maxDigits = Math.max(maxDigits, digitCount(nums[i]))
+  }
+  return maxDigits
+}
+
+// console.log(mostDigits([23, 567, 89, 12234324, 90]))
+
+/* Define a function radixSort that accepts array of numbers
+  1. Figure out how many digits the largest number has
+  2. Loop from k = 0 up to this largest number of digits
+  3. For each iteration of the loop:
+    a. Create buckets for each digit (0 to 9)
+    b. place each number in the corresponding bucket based on its kth digit
+  4. Replace our existing array with values in our buckets, starting with 0 and going up to 9
+  5. return array at the end! 
+*/
+
+const radixSort = (nums) => {
+  let maxDigitCount = mostDigits(nums)
+  for (let k=0; k<maxDigitCount; k++) {
+    let digitBuckets = Array.from({length: 10}, () => [])
+    for (let i=0; i < nums.length; i++) {
+      let digit = getDigit(nums[i], k)
+      digitBuckets[digit].push(nums[i])
+    }
+    nums =  [].concat(...digitBuckets)
+  }
+  return nums
+}
+console.log(radixSort([23, 345, 5467, 12, 2345, 9852]))

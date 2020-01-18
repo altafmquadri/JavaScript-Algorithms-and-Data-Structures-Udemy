@@ -438,3 +438,38 @@ we need a helper function, pivot pseudocode:
   
 
 // console.log(quickSort([26,23,27,44,17,47,39,42,43,1]))
+
+
+/* In order to perform a radix sort we need some helpers
+first helper is to return the 1s, 10s, 100s and 1000s place and so on 
+getDigit(number, place) */
+
+
+
+// console.log(getDigit(7323, 2))
+
+/* second helper we need to know the count of numbers 
+digitCount*/
+
+
+/* third helper we need to know the most digits
+mostDigits(nums) - given an array of numbers, return the number of digits
+in the largest numbers in the list 
+digitCount*/
+
+
+
+// console.log(mostDigits([23, 567, 89, 12234324, 90]))
+
+/* Define a function radixSort that accepts array of numbers
+  1. Figure out how many digits the largest number has
+  2. Loop from k = 0 up to this largest number of digits
+  3. For each iteration of the loop:
+    a. Create buckets for each digit (0 to 9)
+    b. place each number in the corresponding bucket based on its kth digit
+  4. Replace our existing array with values in our buckets, starting with 0 and going up to 9
+  5. return array at the end! 
+*/
+
+
+// console.log(radixSort([23, 345, 5467, 12, 2345, 9852]))
