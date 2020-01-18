@@ -402,3 +402,39 @@ write a fxn stringSearch
 
 
 // console.log(mergeSort([5,42,86,3,15,90, 99]))
+
+
+
+
+
+
+/* Quick sort 
+we need a helper function, pivot pseudocode:
+  1. accept three arguments: 
+    an array, a start index, and an end index 
+  2. Grab the pivot from the start of the array 
+  3. Store the current pivot index in a variable 
+    (this will keep track of where the pivot should end up)
+  4. Loop through the array from the start until the end
+  5. If the pivot is greater than the current element 
+    a. increment the pivot index variable and then swap the current element 
+      with the element at the pivot index
+  6. Swap the starting element (i.e. the pivot) with the pivot index
+  7. Return the pivot index */
+
+
+
+  // console.log(pivot([4,8,2,1,5,7,6,3]))
+  // console.log(pivot([26,23,27,44,17,47,39,42,43,1]))
+  // console.log(pivot([4,8,2,1,5,7,6,3]))
+
+  /* Call the pivot helper on the array
+  1.When the helper returns to you the updated pivot index, 
+    recursively call the pivot helper on the subarray to the 
+    left of that index, and the subarray to the right of that index
+  2. Your base case occurs when you consider a subarray with less than 2 elements */
+
+
+  
+
+// console.log(quickSort([26,23,27,44,17,47,39,42,43,1]))

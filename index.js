@@ -1023,3 +1023,130 @@ const mergeSort = (arr) => {
 }
 
 // console.log(mergeSort([5,42,86,3,15,90, 99]))
+
+/* Quick sort 
+we need a helper function, pivot pseudocode:
+  1. accept three arguments: 
+    an array, a start index, and an end index 
+  2. Grab the pivot from the start of the array 
+  3. Store the current pivot index in a variable 
+    (this will keep track of where the pivot should end up)
+  4. Loop through the array from the start until the end
+  5. If the pivot is greater than the current element 
+    a. increment the pivot index variable and then swap the current element 
+      with the element at the pivot index
+  6. Swap the starting element (i.e. the pivot) with the pivot index
+  7. Return the pivot index */
+
+
+  // const pivot = (arr, start = 1, end = arr.length -1) => {
+  //   let pivotIndex = 0
+  //   let pivot = arr[0]
+  //   const swap = (arr, id1, id2) => {
+  //     let temp = arr[id1]
+  //     arr[id1] = arr[id2]
+  //     arr[id2] = temp
+  //   }
+
+  //   for (i = 0; i<=end; i++) {
+  //     if (pivot > arr[i] && start ===1) {
+  //       pivotIndex++
+  //       start++
+  //     }
+  //     else if (pivot < arr[i]) {
+  //       start++
+  //     }
+  //     else if (pivot > arr[i] && start !==1) {
+  //       pivotIndex++
+  //       swap(arr, i, pivotIndex)
+  //       start++
+  //     }
+  //   }
+  //   swap(arr, pivotIndex, 0)
+  //   console.log(arr)
+  //   return pivotIndex
+  // }
+
+//refactor bc we can swap the first one by itself
+  // const pivot = (arr, start = 1, end = arr.length -1) => {
+  //   let pivotIndex = 0
+  //   let pivot = arr[0]
+  //   const swap = (arr, id1, id2) => {
+  //     let temp = arr[id1]
+  //     arr[id1] = arr[id2]
+  //     arr[id2] = temp
+  //   }
+    
+  //   for (i = 0; i<=end; i++) {
+  //     if (pivot > arr[i]) {
+  //       pivotIndex++
+  //       swap(arr, i, pivotIndex)
+  //       start++
+  //       console.log(arr)
+  //     }
+  //     else if (pivot < arr[i]) {
+  //       start++
+  //     }
+      
+  //   }
+  //   swap(arr, pivotIndex, 0)
+  //   console.log(arr)
+  //   return pivotIndex
+  // }
+
+  //final refactor
+  const pivot = (arr, start=0, end=arr.length-1) => {
+    const swap = (arr, idx1, idx2) => {
+      let temp = arr[idx1]
+      arr[idx1] = arr[idx2]
+      arr[idx2] = temp
+    }
+
+    /* the next line of code gave me a tremendous amount of 
+    trouble i was using pivotIndex = 0, so when i called
+    the function with parameters, it would ignore and just use
+    0, the samething below in the swap, we will be changing the 
+    start varible dynamically based on what we pass through to the
+    recursive calls */
+
+    let pivotIndex = start
+    let pivot = arr[start]
+    
+    
+    for (let i = start+1; i<=end; i++) {
+      if (pivot > arr[i]) {
+        pivotIndex++
+        swap(arr, pivotIndex, i)
+        // console.log(arr)
+      }
+    }
+    swap(arr, start, pivotIndex)
+    // console.log(arr)
+    return pivotIndex
+  }
+
+
+  // console.log(pivot([4,8,2,1,5,7,6,3]))
+  // console.log(pivot([26,23,27,44,17,47,39,42,43,1]))
+  // console.log(pivot([4,8,2,1,5,7,6,3]))
+
+  /* Call the pivot helper on the array
+  1.When the helper returns to you the updated pivot index, 
+    recursively call the pivot helper on the subarray to the 
+    left of that index, and the subarray to the right of that index
+  2. Your base case occurs when you consider a subarray with less than 2 elements */
+
+
+  const quickSort = (arr, left = 0, right = arr.length-1) => {
+    if (left < right) {
+      let pivotPoint = pivot(arr, left, right)
+      quickSort(arr, left, pivotPoint-1)
+      // console.log(arr, pivotPoint, left, right)
+      quickSort(arr, pivotPoint+1, right)
+      // console.log(arr, pivotPoint, left, right)
+    }
+    // console.log(arr)
+    return arr
+  }
+
+console.log(quickSort([26,23,27,44,17,47,39,42,43,1]))
