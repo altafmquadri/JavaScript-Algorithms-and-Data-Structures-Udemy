@@ -1207,4 +1207,91 @@ const radixSort = (nums) => {
   }
   return nums
 }
-console.log(radixSort([23, 345, 5467, 12, 2345, 9852]))
+// console.log(radixSort([23, 345, 5467, 12, 2345, 9852]))
+
+
+/******************************************************************************************************** 
+                                          Data structures 
+Node 
+  piece of data
+  reference to the next node
+
+Linked Lists
+  do not have any indices
+  connected via nodes with a next pointer
+  random access not allowed
+
+  pushing psedudocode
+    1. This function should accept a value
+    2. Create a new node using the value passed to the function
+    3. If there is no head property on the list, 
+        a. set the head and tail to be the newly created node
+        b. Otherwise set the next property on the tail to be the new 
+          node and set the tail property on the list to be the newly created node
+    4. Increment the length by one
+    5. Return the linked list
+
+  popping pseudocode
+    1. If there are no nodes in the list, return undefined
+    2. Loop through the list until you reach the tail
+    3. Set the next property of the 2nd to last node to be null
+    4. Set the tail to be the 2nd to last node
+    5. Decrement the length of the list by 1
+    6. Return the value of the node removed
+  */
+
+class Node {
+  constructor(val) {
+    this.val = val
+    this.next = null
+  }
+}
+
+class SinglyLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+  push(val) {
+    let newNode = new Node(val)
+    if (!this.head) {
+      this.head = newNode
+      this.tail = this.head
+    } 
+    else {
+      let current = this.tail
+      current.next = newNode
+      this.tail = newNode
+    }
+    this.length++
+    return this
+  }
+
+  pop() {
+    if (!this.head) return undefined
+    let current = this.head
+    let previous = current
+
+    while (current.next !== null) {
+      previous = current
+      current = current.next
+    }
+    this.tail = previous
+    previous.next = null
+    this.length--
+    if (this.length === 0) {
+      this.head = null
+      this.tail = null
+    }
+    return current
+  }
+}
+
+const list = new SinglyLinkedList()
+// console.log(list.push(20))
+// console.log(list.push(30))
+// console.log(list.pop())
+
+
+
