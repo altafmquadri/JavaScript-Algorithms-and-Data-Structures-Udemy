@@ -1238,6 +1238,27 @@ Linked Lists
     4. Set the tail to be the 2nd to last node
     5. Decrement the length of the list by 1
     6. Return the value of the node removed
+  
+  shift pseudocode
+    1. If there are no nodes, return undefined
+    2. Store the current head property in a variable
+    3. Set the head property to be the current head's next property
+    4. Decrement the length by 1
+    5. Return the value of the node removed
+  
+  unshift psuedoCode 
+    1. This function should accept a value
+    2. Create a new node using the value passed to the function
+    3. If there is no head property on the list, set the head and tail to be the newly created node
+    4. Otherwise set the newly created node's next property to be the current head property on the list
+    5. Set the head property on the list to be that newly created node
+    6. Increment the length of the list by 1
+    7. Return the linked list
+
+  get pseudocode
+    1. This function should accept an index
+    2. If the index is less than zero or greater than or equal to the length of the list, return null
+    3. Loop through the list until you reach the index and return the node at that specific index
   */
 
 class Node {
@@ -1283,6 +1304,42 @@ class SinglyLinkedList {
     if (this.length === 0) {
       this.head = null
       this.tail = null
+    }
+    return current
+  }
+
+  shift() {
+    if(!this.head) return undefined
+    let current = this.head
+    this.head = current.next
+    current.next = null
+    this.length--
+    if (this.length === 0) {
+      this.head = null
+      this.tail = null
+    }
+    return current
+  }
+
+  unshift(val) {
+    let newNode = new Node(val)
+    if (!this.head) {
+      this.head = newNode
+      this.tail = this.head
+    } else {
+      newNode.next = this.head
+      this.head = newNode
+    }
+    this.length++
+    return this
+  }
+
+  get(index) {
+    if (index < 0 || index>= this.length) return undefined
+    let current = this.head
+    if (index === 0) return current
+    for (let i=1; i<=index; i++) {
+      current = current.next
     }
     return current
   }
