@@ -1298,12 +1298,12 @@ Linked Lists
     10. Once you have finished looping, return the list
     */
 
-class Node {
-  constructor(val) {
-    this.val = val
-    this.next = null
-  }
-}
+// class Node {
+//   constructor(val) {
+//     this.val = val
+//     this.next = null
+//   }
+// }
 
 class SinglyLinkedList {
   constructor() {
@@ -1440,13 +1440,216 @@ class SinglyLinkedList {
   }
 }
 
-const list = new SinglyLinkedList()
-// console.log(list.push(20))
-// console.log(list.push(30))
-// console.log(list.pop())
-list.push(10)
-list.push(20)
-list.push(30)
+// const list = new SinglyLinkedList()
+// // console.log(list.push(20))
+// // console.log(list.push(30))
+// // console.log(list.pop())
+// list.push(10)
+// list.push(20)
+// list.push(30)
+
+/*********************************************************************************************************** 
+                                          Doubly Linked List
+push pseudocode
+  1. Create a new node with the value passed to the function
+  2. If the head property is null set the head and tail to be the newly created node 
+  3. If not, set the next property on the tail to be that node
+  4. Set the previous property on the newly created node to be the tail
+  5. Set the tail to be the newly created node
+  6. Increment the length
+  7. Return the Doubly Linked List
+
+  pop pseudocode
+    1. If there is no head, return undefined
+    2. Store the current tail in a variable to return later
+    3. If the length is 1, set the head and tail to be null
+    4. Update the tail to be the previous Node.
+    5. Set the newTail's next to null
+    6. Decrement the length
+    7. Return the value removed
+
+  shifting pseudocode
+    1. If length is 0, return undefined
+    2. Store the current head property in a variable (we'll call it old head)
+    3. If the length is one
+    4. set the head to be null
+    5. set the tail to be null
+    6. Update the head to be the next of the old head
+    7. Set the head's prev property to null
+    8. Set the old head's next to null
+    9. Decrement the length
+    10. Return old head
+
+  unshift pseudocode
+    1. Create a new node with the value passed to the function
+    2. If the length is 0
+      a. Set the head to be the new node
+      b. Set the tail to be the new node
+  Otherwise
+    3. Set the prev property on the head of the list to be the new node
+    4. Set the next property on the new node to be the head property 
+    5. Update the head to be the new node
+    6. Increment the length
+    7. Return the list
+
+  get pseudocode
+    1. If the index is less than 0 or greater or equal to the length, return null
+    2. If the index is less than or equal to half the length of the list
+        a. Loop through the list starting from the head and loop towards the middle
+        b. Return the node once it is found
+    3. If the index is greater than half the length of the list
+​        a. Loop through the list starting from the tail and loop towards the middle
+        b. Return the node once it is found
+
+  set pseudocode
+    1. Create a variable which is the result of the get method at the index passed to the function
+      a. If the get method returns a valid node, set the value of that node to be the value passed to the function
+      b. Return true
+    2. Otherwise, return false
+
+  insert pseudocode
+    1. If the index is less than zero or greater than the length return false
+    2. If the index is 0, unshift
+    3. If the index is the same as the length, push
+    4. Use the get method to access the index -1
+    5. Set the next and prev properties on the correct nodes to link everything together
+    6. Increment the length 
+    7. Return true
+*/
+
+class Node {
+  constructor(val) {
+    this.val = val
+    this.next = null
+    this.prev = null
+  }
+}
+
+class DoublyLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+
+  push(val) {
+    let newNode = new Node(val)
+    if (!this.head) {
+      this.head = newNode
+      this.tail = newNode
+    } else {
+      let prevNode = this.tail
+      prevNode.next = newNode
+      newNode.prev = prevNode
+      this.tail = newNode
+    }
+    this.length++
+    return this
+  }
+
+  pop() {
+    if (!this.head) return undefined
+    let removed = this.tail
+    if(this.length === 1) {
+      this.head = null
+      this.tail = null
+    } else {
+      this.tail = removed.prev
+      this.tail.next = null
+      removed.prev = null
+    }
+    this.length--
+    return removed
+  }
+
+  shift() {
+    if (!this.head) return undefined
+    let removed = this.head
+    if (this.length === 1) {
+      this.head = null
+      this.tail = null
+    } else {
+      let newFirst = removed.next
+      this.head = newFirst
+      removed.next = null
+      newFirst.prev = null
+    }
+    this.length--
+    return removed
+  }
+
+  unshift(val) {
+    let newNode = new Node(val)
+    if (!this.head) {
+      this.head = newNode
+      this.tail = newNode
+    } else {
+      let secondNode = this.head
+      secondNode.prev = newNode
+      newNode.next = secondNode
+      this.head = newNode
+    }
+    this.length++
+    return this
+  }
+
+  get(index) {
+    if (index < 0 || index >= this.length) return undefined
+    let current
+    if (index <= this.length/2) {
+      // console.log('wfb')
+      let count = 0
+      current = this.head
+      while (count !== index) {
+        current = current.next
+        count++
+      }
+    } else {
+      // console.log('wfe')
+      let count = this.length-1
+      current = this.tail
+      while (count !== index) {
+        current = current.prev
+        count--
+      }
+    }
+    return current
+  }
+
+  set(index, val) {
+    let current = this.get(index)
+    if (current) return (!!(current.val = val))
+    return false
+  }
+
+  insert(index, val) {
+    if (index < 0 || index > this.length) return false
+    if (index === 0) return !!this.unshift(val)
+    else if (index === this.length) return !!this.push(val)
+    else {
+      let newNode = new Node(val)
+      let prev = this.get(index - 1)
+      let next = prev.next
+      prev.next = newNode
+      next.prev = newNode
+      newNode.prev = prev
+      newNode.next = next
+      this.length++
+      return true
+    }
+  }
+
+
+}//end DLL
+
+dList = new DoublyLinkedList()
+dList.push(10)
+dList.push(20)
+dList.push(30)
+// dList.push(40)
+// dList.push(50)
+// dList.push(60)
+// dList.push(70)
 
 
 

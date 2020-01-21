@@ -560,4 +560,15 @@ Linked Lists
     8. Set prev to be the value of the node variable
     9. Set the node variable to be the value of the next variable
     10. Once you have finished looping, return the list
+    
+    include this print at the end 
+    print() {
+    let arr = []
+    let current = this.head
+    while (current) {
+      arr.push(current.val)
+      current = current.next
+    }
+    console.log(arr)
+  }
     */
