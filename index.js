@@ -1259,7 +1259,44 @@ Linked Lists
     1. This function should accept an index
     2. If the index is less than zero or greater than or equal to the length of the list, return null
     3. Loop through the list until you reach the index and return the node at that specific index
-  */
+  
+  set pseudocode
+    1. This function should accept an index and a value
+    2. Use your get function to find the specific node
+    3. If the node is not found, return false
+    4. If the node is found, set the value of that node to be the value passed to the function and return true
+  
+  insert pseudocode
+    1. If the index is less than zero or greater than the length, return false
+    2. If the index is the same as the length, push a new node to the end of the list
+    3. If the index is 0, unshift a new node to the start of the list
+    4. Otherwise, using the get method, access the node at the index - 1
+    5. Set the next property on that node to be the new node
+    6. Set the next property on the new node to be the previous next
+    7. Increment the length
+    8.  Return true
+
+  remove pseudocode
+    1. If the index is less than zero or greater than or equal to the the length, return undefined
+    2. If the index is the same as the length-1, pop
+    3. If the index is 0, shift
+    4. Otherwise, using the get method, access the node at the index - 1
+    4. Set the next property on that node to be the next of the next node
+    5. Decrement the length
+    6. Return the value of the node removed
+
+  reverse pseudocode
+    1. Swap the head and tail
+    2. Create a variable called next
+    3. Create a variable called prev
+    4. Create a variable called node and initialize it to the head property
+    5. Loop through the list
+    6. Set next to be the next property on whatever node is
+    7. Set the next property on the node to be whatever prev is
+    8. Set prev to be the value of the node variable
+    9. Set the node variable to be the value of the next variable
+    10. Once you have finished looping, return the list
+    */
 
 class Node {
   constructor(val) {
@@ -1343,12 +1380,73 @@ class SinglyLinkedList {
     }
     return current
   }
+
+  set(index, value) {
+    let current = this.get(index)
+    if (current === undefined) return false
+    current.val = value
+    return true
+  }
+
+  insert(index, value) {
+    if (index < 0 || index > this.length) return false
+    if (index === this.length) return !!this.push(value)
+    if (index === 0) return !!this.unshift(value)
+    let newNode = new Node(value)
+    let prev = this.get(index - 1)
+    let nextNode = prev.next
+    prev.next = newNode
+    newNode.next = nextNode
+    this.length++
+    return true
+  }
+
+  remove(index) {
+    if(index < 0 || index >= this.length) return undefined
+    if(index === this.length-1) return this.pop()
+    if(index === 0) return this.shift()
+    let prev = this.get(index - 1)
+    let removed = prev.next
+    prev.next = removed.next
+    removed.next = null
+    this.length--
+    return removed
+  }
+
+  reverse() {
+    let current = this.head
+    this.head = this.tail
+    this.tail = current
+    let prev = null
+    let next
+
+    for (let i=0; i < this.length; i++) {
+      next = current.next
+      current.next = prev
+      prev = current
+      current = next
+    }
+    return this
+  }
+
+  print() {
+    let arr = []
+    let current = this.head
+    while (current) {
+      arr.push(current.val)
+      current = current.next
+    }
+    console.log(arr)
+  }
 }
 
 const list = new SinglyLinkedList()
 // console.log(list.push(20))
 // console.log(list.push(30))
 // console.log(list.pop())
+list.push(10)
+list.push(20)
+list.push(30)
 
 
 

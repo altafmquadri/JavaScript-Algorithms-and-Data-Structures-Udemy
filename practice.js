@@ -475,5 +475,89 @@ digitCount*/
 // console.log(radixSort([23, 345, 5467, 12, 2345, 9852]))
 
 /******************************************************************************************************** 
-                                          Data structures */
+                                          Data structures 
+Node 
+  piece of data
+  reference to the next node
 
+Linked Lists
+  do not have any indices
+  connected via nodes with a next pointer
+  random access not allowed
+
+  pushing psedudocode
+    1. This function should accept a value
+    2. Create a new node using the value passed to the function
+    3. If there is no head property on the list, 
+        a. set the head and tail to be the newly created node
+        b. Otherwise set the next property on the tail to be the new 
+          node and set the tail property on the list to be the newly created node
+    4. Increment the length by one
+    5. Return the linked list
+
+  popping pseudocode
+    1. If there are no nodes in the list, return undefined
+    2. Loop through the list until you reach the tail
+    3. Set the next property of the 2nd to last node to be null
+    4. Set the tail to be the 2nd to last node
+    5. Decrement the length of the list by 1
+    6. Return the value of the node removed
+  
+  shift pseudocode
+    1. If there are no nodes, return undefined
+    2. Store the current head property in a variable
+    3. Set the head property to be the current head's next property
+    4. Decrement the length by 1
+    5. Return the value of the node removed
+  
+  unshift psuedoCode 
+    1. This function should accept a value
+    2. Create a new node using the value passed to the function
+    3. If there is no head property on the list, set the head and tail to be the newly created node
+    4. Otherwise set the newly created node's next property to be the current head property on the list
+    5. Set the head property on the list to be that newly created node
+    6. Increment the length of the list by 1
+    7. Return the linked list
+
+  get pseudocode
+    1. This function should accept an index
+    2. If the index is less than zero or greater than or equal to the length of the list, return null
+    3. Loop through the list until you reach the index and return the node at that specific index
+  
+  set pseudocode
+    1. This function should accept an index and a value
+    2. Use your get function to find the specific node
+    3. If the node is not found, return false
+    4. If the node is found, set the value of that node to be the value passed to the function and return true
+  
+  insert pseudocode
+    1. If the index is less than zero or greater than the length, return false
+    2. If the index is the same as the length, push a new node to the end of the list
+    3. If the index is 0, unshift a new node to the start of the list
+    4. Otherwise, using the get method, access the node at the index - 1
+    5. Set the next property on that node to be the new node
+    6. Set the next property on the new node to be the previous next
+    7. Increment the length
+    8.  Return true
+
+  remove pseudocode
+    1. If the index is less than zero or greater than or equal to the the length, return undefined
+    2. If the index is the same as the length-1, pop
+    3. If the index is 0, shift
+    4. Otherwise, using the get method, access the node at the index - 1
+    4. Set the next property on that node to be the next of the next node
+    5. Decrement the length
+    6. Return the value of the node removed
+
+  reverse pseudocode
+    1. Swap the head and tail
+    2. Create a variable called next
+    3. Create a variable called prev
+    4. Create a variable called node and initialize it to the head property
+    5. Loop through the list
+    6. Set next to be the next property on whatever node is
+    7. Set the next property on the node to be whatever prev is
+    8. Set prev to be the value of the node variable
+    9. Set the node variable to be the value of the next variable
+    10. Once you have finished looping, return the list
+    */
