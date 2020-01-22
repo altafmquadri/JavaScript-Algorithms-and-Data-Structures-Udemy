@@ -572,3 +572,90 @@ Linked Lists
     console.log(arr)
   }
     */
+
+
+
+/*********************************************************************************************************** 
+                                          Doubly Linked List
+push pseudocode
+  1. Create a new node with the value passed to the function
+  2. If the head property is null set the head and tail to be the newly created node 
+  3. If not, set the next property on the tail to be that node
+  4. Set the previous property on the newly created node to be the tail
+  5. Set the tail to be the newly created node
+  6. Increment the length
+  7. Return the Doubly Linked List
+
+pop pseudocode
+  1. If there is no head, return undefined
+  2. Store the current tail in a variable to return later
+  3. If the length is 1, set the head and tail to be null
+  4. Update the tail to be the previous Node.
+  5. Set the newTail's next to null
+  6. Decrement the length
+  7. Return the value removed
+
+shifting pseudocode
+  1. If length is 0, return undefined
+  2. Store the current head property in a variable (we'll call it old head)
+  3. If the length is one
+  4. set the head to be null
+  5. set the tail to be null
+  6. Update the head to be the next of the old head
+  7. Set the head's prev property to null
+  8. Set the old head's next to null
+  9. Decrement the length
+  10. Return old head
+
+unshift pseudocode
+  1. Create a new node with the value passed to the function
+  2. If the length is 0
+    a. Set the head to be the new node
+    b. Set the tail to be the new node
+Otherwise
+  3. Set the prev property on the head of the list to be the new node
+  4. Set the next property on the new node to be the head property 
+  5. Update the head to be the new node
+  6. Increment the length
+  7. Return the list
+
+get pseudocode
+  1. If the index is less than 0 or greater or equal to the length, return null
+  2. If the index is less than or equal to half the length of the list
+      a. Loop through the list starting from the head and loop towards the middle
+      b. Return the node once it is found
+  3. If the index is greater than half the length of the list
+​        a. Loop through the list starting from the tail and loop towards the middle
+      b. Return the node once it is found
+
+set pseudocode
+  1. Create a variable which is the result of the get method at the index passed to the function
+    a. If the get method returns a valid node, set the value of that node to be the value passed to the function
+    b. Return true
+  2. Otherwise, return false
+
+insert pseudocode
+  1. If the index is less than zero or greater than the length return false
+  2. If the index is 0, unshift
+  3. If the index is the same as the length, push
+  4. Use the get method to access the index -1
+  5. Set the next and prev properties on the correct nodes to link everything together
+  6. Increment the length 
+  7. Return true
+
+remove pseudocode
+  1. If the index is less than zero or greater than or equal to the length return undefined
+  2. If the index is 0, shift
+  3. If the index is the same as the length-1, pop
+  4. Use the get method to retrieve the item to be removed
+  5. Update the next and prev properties to remove the found node from the list
+  6. Set next and prev to null on the found node
+  7. Decrement the length
+  8. Return the removed node
+
+reverse pseudocode
+  1. start at the head
+  2. traverse the list switching out prev vs next
+  3. continue until current.prev (which is now the next value) reaches the end
+  4. swap out head and tail
+*/
