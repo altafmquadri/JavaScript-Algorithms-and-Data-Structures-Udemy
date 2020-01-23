@@ -659,3 +659,47 @@ reverse pseudocode
   3. continue until current.prev (which is now the next value) reaches the end
   4. swap out head and tail
 */
+
+
+/*********************************************************************************************************** 
+                                                  Stacks
+push pseudocode
+  1. The function should accept a value
+  2. Create a new node with that value
+  3. If there are no nodes in the stack, set the first and last property to be the newly created node 
+  4. If there is at least one node, create a variable that stores the current first property on the stack
+  5. Reset the first property to be the newly created node
+  6. Set the next property on the node to be the previously created variable
+  7. Increment the size of the stack by 1
+
+pop pseudocode 
+  1. If there are no nodes in the stack, return null
+  2. Create a temporary variable to store the first property on the stack
+  3. If there is only 1 node, set the first and last property to be null
+  4. If there is more than one node, set the first property to be the next property on the current first
+  5. Decrement the size by 1
+  6. Return the value of the node removed
+*/
+
+
+
+
+
+
+/*********************************************************************************************************** 
+                                                  Queues  
+enqueue pseudocode
+  1. This function accepts some value
+  2. Create a new node using that value passed to the function
+  3. If there are no nodes in the queue, set this node to be the first and last property of the queue
+  4. Otherwise, set the next property on the current last to be that node, and then set the last property of the queue to be that node
+  5. Increment the size of the queue by 1
+
+  dequeue pseudocode
+    1. If there is no first property, just return null
+    2. Store the first property in a variable
+    3. See if the first is the same as the last (check if there is only 1 node). If so, set the first and last to be null
+    4. If there is more than 1 node, set the first property to be the next property of first 
+    5. Decrement the size by 1
+    6. Return the value of the node dequeued
+*/
