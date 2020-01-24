@@ -1779,12 +1779,12 @@ enqueue pseudocode
 */
 
 
-class Node {
-  constructor(val){
-    this.val = val
-    this.next = null
-  }
-}
+// class Node {
+//   constructor(val){
+//     this.val = val
+//     this.next = null
+//   }
+// }
 
 class Queue {
   constructor() {
@@ -1825,5 +1825,125 @@ class Queue {
 
 /*********************************************************************************************************** 
                                                   Trees
+lists are linear
+tree are non-linear
+node has to point to another child and only has one root (top node in a tree)
+leaf - has no children
+edge - is the arrow
+** uses of trees **
+html dom
+network routing
+AI
+folders in OS
+JSON
+**
+** Binary Search Tree**
+can have a max of two children per node
+data that can be compared or sorted
+every node to the left of a parent node is always less than the parent
+every node to the right of a parent node is always greater than the parent
+as the number of nodes doubles we only take one step whether inserting or
+finding so it has O(log n) time complexity
+
+if bst is lobsided to only one sided tree, then it's basically a linked list, and it's O(n)
+
+inserting pseudocode
+  1. Create a new node
+  2. Starting at the root
+    a. Check if there is a root, if not - the root now becomes that new node!
+    b. If there is a root, check if the value of the new node is greater than or less than the value of the root
+    c.If it is greater 
+      1. Check to see if there is a node to the right
+        a. If there is, move to that node and repeat these steps
+        b. If there is not, add that node as the right property
+    d. If it is less
+        a. Check to see if there is a node to the left
+        b. If there is, move to that node and repeat these steps
+        c. If there is not, add that node as the left property
+
+find pseudocode
+  1. Starting at the root
+    a. Check if there is a root, if not - we're done searching!
+    b. If there is a root, check if the value of the new node is the value we are looking for. If we found it, we're done!
+    c. If not, check to see if the value is greater than or less than the value of the root
+    d. If it is greater 
+      1. Check to see if there is a node to the right
+        a. If there is, move to that node and repeat these steps
+        b. If there is not, we're done searching!
+    e. If it is less
+      1. Check to see if there is a node to the left
+        a. If there is, move to that node and repeat these steps
+        b. If there is not, we're done searching!
+        c. return the node if found, if not return false
+  2. bonus implement a contains fxn which return true/false
 
 */
+
+
+// class Node {
+//   constructor(val) {
+//     this.val = val
+//     this.left = null
+//     this.right = null
+//   }
+// }
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null
+  }
+
+  insert(val) {
+    let newNode = new Node(val)
+    if (!this.root) {
+      this.root = newNode
+      return this
+    } else {
+      let current = this.root
+      while(true) {
+        if (val === current.val) return undefined
+        if (val > current.val) {
+          if (current.right === null) {
+            current.right = newNode
+            return this
+          } else {
+            current = current.right
+          }
+        } else if (val < current.val) {
+          if (current.left === null) {
+            current.left = newNode
+            return this
+          } else {
+            current = current.left
+          }
+        }
+      }//end while
+    }
+  }//end insert
+
+  find(val) {
+    if(!this.root) return false
+    let current = this.root
+    let found = false
+    while(!found) {
+      if (current.val === val) return current
+      if (val > current.val) {
+        if (current.right === null) return found
+        current = current.right
+      } else if (val < current.val) {
+        if (current.left === null) return found
+        current = current.left
+      } else {
+        return false
+      }
+    } 
+  }
+
+  contains(val) {
+    return !!this.find(val)
+  }
+
+} //end bst
+
+const bst = new BinarySearchTree()
+
