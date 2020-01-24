@@ -1880,13 +1880,13 @@ find pseudocode
 */
 
 
-// class Node {
-//   constructor(val) {
-//     this.val = val
-//     this.left = null
-//     this.right = null
-//   }
-// }
+class Node {
+  constructor(val) {
+    this.val = val
+    this.left = null
+    this.right = null
+  }
+}
 
 class BinarySearchTree {
   constructor() {
@@ -1946,4 +1946,113 @@ class BinarySearchTree {
 } //end bst
 
 const bst = new BinarySearchTree()
+bst.insert(10)
+bst.insert(6)
+bst.insert(15)
+bst.insert(3)
+bst.insert(8)
+bst.insert(20)
 
+
+
+/*********************************************************************************************************** 
+                                                  Tree traversal
+two main ways
+1. Breadth-first
+2. Depth-first
+
+BFS
+  1. Create a queue (this can be an array) and a variable to store the values of nodes visited
+  2. Place the root node in the queue
+  3. Loop as long as there is anything in the queue
+    a. Dequeue a node from the queue and push the value of the node into the variable that stores the nodes
+    b. If there is a left property on the node dequeued - add it to the queue
+    c. If there is a right property on the node dequeued - add it to the queue
+  4. Return the variable that stores the values
+
+
+DFS - Preorder
+  1. Create a variable to store the values of nodes visited
+  2. Store the root of the BST in a variable called current
+  3. Write a helper function which accepts a node
+    a. Push the value of the node to the variable that stores the values
+    b. If the node has a left property, call the helper function with the left property on the node
+    c. If the node has a right property, call the helper function with the right property on the node
+  4. Invoke the helper function with the current variable
+  5. Return the array of values
+
+DFS - Postorder
+  1. Create a variable to store the values of nodes visited
+  2. Store the root of the BST in a variable called current
+  3. Write a helper function which accepts a node
+    a. If the node has a left property, call the helper function with the left property on the node
+    b. If the node has a right property, call the helper function with the right property on the node
+    c. Push the value of the node to the variable that stores the values
+  4. Invoke the helper function with the current variable
+  5. Return the array of values
+
+DFS - Inorder
+  1. Create a variable to store the values of nodes visited
+  2. Store the root of the BST in a variable called current
+  3. Write a helper function which accepts a node
+    a. If the node has a left property, call the helper function with the left property on the node
+    b. Push the value of the node to the variable that stores the values
+    c. If the node has a right property, call the helper function with the right property on the node
+  4. Invoke the helper function with the current variable
+  5. Return the array of values
+*/
+
+
+const BFS = (tree) => {
+  let queue = []
+  let visited = []
+  let current = tree.root
+
+  queue.push(current)
+  while (queue.length >= 1) {
+    let node = queue.shift()
+    if (node.left) queue.push(node.left)
+    if (node.right) queue.push(node.right)
+    visited.push(node.val)
+  }
+  return visited
+}
+
+const DFSPreOrder = (tree) => {
+  let visited = []
+  let current = tree.root
+
+  const traverse = (node) => {
+    visited.push(node.val)
+    if (node.left) traverse(node.left)
+    if (node.right) traverse(node.right)
+  }
+  traverse(current)
+  return visited
+}
+
+const DFSPostOrder = (tree) => {
+  let visited = []
+  let current = tree.root
+
+  const traverse = (node) => {
+    if (node.left) traverse(node.left)
+    if (node.right) traverse(node.right)
+    visited.push(node.val)
+  }
+  traverse(current)
+  return visited
+}
+
+const DFSInOrder = (tree) => {
+  let visited = []
+  let current = tree.root
+
+  const traverse = (node) => {
+    node.left && traverse(node.left)
+    visited.push(node.val)
+    node.right && traverse(node.right)
+  }
+  traverse(current)
+  return visited
+}
