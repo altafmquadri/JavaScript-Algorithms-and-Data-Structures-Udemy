@@ -1880,13 +1880,13 @@ find pseudocode
 */
 
 
-class Node {
-  constructor(val) {
-    this.val = val
-    this.left = null
-    this.right = null
-  }
-}
+// class Node {
+//   constructor(val) {
+//     this.val = val
+//     this.left = null
+//     this.right = null
+//   }
+// }
 
 class BinarySearchTree {
   constructor() {
@@ -1945,13 +1945,13 @@ class BinarySearchTree {
 
 } //end bst
 
-const bst = new BinarySearchTree()
-bst.insert(10)
-bst.insert(6)
-bst.insert(15)
-bst.insert(3)
-bst.insert(8)
-bst.insert(20)
+// const bst = new BinarySearchTree()
+// bst.insert(10)
+// bst.insert(6)
+// bst.insert(15)
+// bst.insert(3)
+// bst.insert(8)
+// bst.insert(20)
 
 
 
@@ -2116,8 +2116,9 @@ class MaxBinaryHeap {
     const bubbleUp = (arr) => {
       let i = Math.floor(((arr.length - 1)-1)/2)
       let j = arr.length - 1
+      // console.log(i, j, 'i am in insert')
       while(arr[i] < arr[j] && i >= 0) {
-        // console.log(arr, i, j)
+        // console.log(arr, i, j, 'i am also in insert')
         this.swap(arr, i, j)
         j = i
         i = Math.floor((i-1)/2)
@@ -2162,9 +2163,9 @@ class MaxBinaryHeap {
 
 }//end heap
 
-// const mbh = new MaxBinaryHeap()
+const mbh = new MaxBinaryHeap()
 
-// mbh.insert(41)
+mbh.insert(41)
 // mbh.insert(39)
 // mbh.insert(33)
 // mbh.insert(18)
@@ -2175,5 +2176,93 @@ class MaxBinaryHeap {
 
 /*********************************************************************************************************** 
                                                   Priority Queue
+Priority Queue
+  1. Write a Min Binary Heap - lower number means higher priority
+  2. Each Node has a val and a priority.  Use the priority to build the heap
+  3. Enqueue method accepts a value and priority, makes a new node,
+      and puts it in the right spot based off of its priority
+  4. Dequeue method removes root element, returns it, and rearranges heap using priority
 
 */
+
+class Node {
+  constructor(val, priority) {
+    this.val = val
+    this.priority = priority
+  }
+}
+
+class PriorityQueue {
+  constructor(){
+    this.values = []
+  }
+  swap = (arr, i, j) => {
+    let temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+  }
+
+  enqueue(val, priority) {
+    let newNode = new Node(val, priority)
+    this.values.push(newNode)
+    const bubbleUp = (arr) => {
+      let i = Math.floor(((arr.length - 1)-1)/2)
+      let j = arr.length - 1
+      while(i >= 0 && arr[i].priority > arr[j].priority) {
+        this.swap(arr, i, j)
+        j = i
+        i = Math.floor((i-1)/2)
+      }
+      return arr
+    }
+    return bubbleUp(this.values)
+  }
+
+  dequeue() {
+    this.swap(this.values, 0, this.values.length-1)
+    let min = this.values.pop()
+
+    const sinkDown = (arr) => {
+      let index = 0
+      let parent = arr[0]
+      let end = arr.length
+
+      while(true) {
+        let firstChildIndex = 2 * index + 1
+        let secondChildIndex = 2 * index + 2
+        let swapIdx = null
+        let firstChild, secondChild
+      
+        if (firstChildIndex < end) {
+          firstChild = arr[firstChildIndex]
+          if (firstChild.priority < parent.priority) {
+            swapIdx = firstChildIndex
+          }
+        }
+  
+        if (secondChildIndex < end) {
+          secondChild = arr[secondChildIndex]
+          if (
+            (swapIdx === null && secondChild.priority < parent.priority) ||
+            (swapIdx !== null && secondChild.priority < firstChild.priority)
+            ) {
+              swapIdx = secondChildIndex
+            }
+        }
+        if (swapIdx === null) break
+        this.swap(arr, index, swapIdx)
+        index = swapIdx
+      }
+    }
+    sinkDown(this.values)
+    return min
+  }
+}
+
+
+// let ER = new PriorityQueue()
+// ER.enqueue("gunshot wound", 1)
+// ER.enqueue("glass in foot", 3)
+// ER.enqueue("common cold", 5)
+// ER.enqueue("broken arm", 2)
+// ER.enqueue("high fever", 4)

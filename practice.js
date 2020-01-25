@@ -858,3 +858,25 @@ extractMax pseudocode
     f. Keep looping and swapping until neither child is larger than the element.
     g. Return the old root!
 */
+
+
+/*********************************************************************************************************** 
+                                                  Priority Queue
+Priority Queue
+  1. Write a Min Binary Heap - lower number means higher priority
+  2. Each Node has a val and a priority.  Use the priority to build the heap
+  3. Enqueue method accepts a value and priority, makes a new node,
+      and puts it in the right spot based off of its priority
+  4. Dequeue method removes root element, returns it, and rearranges heap using priority
+
+*/
+
+
+
+
+// let ER = new PriorityQueue()
+// ER.enqueue("gunshot wound", 1)
+// ER.enqueue("glass in foot", 3)
+// ER.enqueue("common cold", 5)
+// ER.enqueue("broken arm", 2)
+// ER.enqueue("high fever", 4)
