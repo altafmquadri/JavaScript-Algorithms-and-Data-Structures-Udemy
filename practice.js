@@ -811,3 +811,50 @@ DFS - Inorder
   4. Invoke the helper function with the current variable
   5. Return the array of values
 */
+
+
+
+
+
+
+
+
+/*********************************************************************************************************** 
+                                                  Heaps 
+very similar to trees but with different rules
+used to implement priority queues
+and used with graph traversal algorithms
+to find children you take n = 2n+1 to find left child 2n+2 to find right child
+to find parent you take n = (n-1)/2 floored
+**Max Binary Heap**
+parent nodes are always larger than child nodes
+no guarantees between siblings (no implied order between siblings)
+compact as possible 
+left children always filled out first
+
+**Min Binary Heap**
+parent nodes are always smaller than child nodes
+
+
+MaxBinaryHeap
+insert pseudocode
+  1. Push the value into the values property on the heap
+  2 .Bubble Up:
+    a.Create a variable called index which is the length of the values property - 1
+    b. Create a variable called parentIndex which is the floor of (index-1)/2
+    c. Keep looping as long as the values element at the parentIndex is less than the values element at the child index
+    d. Swap the value of the values element at the parentIndex with the value of the element property at the child index
+    e. Set the index to be the parentIndex, and start over!
+
+extractMax pseudocode
+  1. Swap the first value in the values property with the last one
+  2. Pop from the values property, so you can return the value at the end.
+  3. Have the new root "sink down" to the correct spot...​
+    a. Your parent index starts at 0 (the root)
+    b. Find the index of the left child: 2 * index + 1 (make sure its not out of bounds)
+    c. Find the index of the right child: 2*index + 2 (make sure its not out of bounds)
+    d. If the left or right child is greater than the element...swap. If both left and right children are larger, swap with the largest child.
+    e. The child index you swapped to now becomes the new parent index.  
+    f. Keep looping and swapping until neither child is larger than the element.
+    g. Return the old root!
+*/

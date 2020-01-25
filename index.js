@@ -2056,3 +2056,124 @@ const DFSInOrder = (tree) => {
   traverse(current)
   return visited
 }
+
+
+
+/*********************************************************************************************************** 
+                                                  Heaps 
+very similar to trees but with different rules
+used to implement priority queues
+and used with graph traversal algorithms
+to find children you take n = 2n+1 to find left child 2n+2 to find right child
+to find parent you take n = (n-1)/2 floored
+**Max Binary Heap**
+parent nodes are always larger than child nodes
+no guarantees between siblings (no implied order between siblings)
+compact as possible 
+left children always filled out first
+
+**Min Binary Heap**
+parent nodes are always smaller than child nodes
+
+
+MaxBinaryHeap
+insert pseudocode
+  1. Push the value into the values property on the heap
+  2 .Bubble Up:
+    a.Create a variable called index which is the length of the values property - 1
+    b. Create a variable called parentIndex which is the floor of (index-1)/2
+    c. Keep looping as long as the values element at the parentIndex is less than the values element at the child index
+    d. Swap the value of the values element at the parentIndex with the value of the element property at the child index
+    e. Set the index to be the parentIndex, and start over!
+
+extractMax pseudocode
+  1. Swap the first value in the values property with the last one
+  2. Pop from the values property, so you can return the value at the end.
+  3. Have the new root "sink down" to the correct spot...​
+    a. Your parent index starts at 0 (the root)
+    b. Find the index of the left child: 2 * index + 1 (make sure its not out of bounds)
+    c. Find the index of the right child: 2*index + 2 (make sure its not out of bounds)
+    d. If the left or right child is greater than the element...swap. If both left and right children are larger, swap with the largest child.
+    e. The child index you swapped to now becomes the new parent index.  
+    f. Keep looping and swapping until neither child is larger than the element.
+    g. Return the old root!
+*/
+
+
+class MaxBinaryHeap {
+  constructor() {
+    this.values = []
+  }
+
+  swap = (arr, i, j) => {
+    let temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+  }
+
+  insert(val) {
+    this.values.push(val)
+    const bubbleUp = (arr) => {
+      let i = Math.floor(((arr.length - 1)-1)/2)
+      let j = arr.length - 1
+      while(arr[i] < arr[j] && i >= 0) {
+        // console.log(arr, i, j)
+        this.swap(arr, i, j)
+        j = i
+        i = Math.floor((i-1)/2)
+      }
+      return arr
+    }
+    return bubbleUp(this.values)
+  }
+
+  extractMax() {
+    if (this.values.length === 0) return null 
+    this.swap(this.values, 0, this.values.length-1)
+    let max = this.values.pop()
+    
+    const sinkDown = (arr) => {
+      let index = 0
+      let firstChildIndex = 2 * index + 1
+      let secondChildIndex = 2 * index + 2
+
+      while(arr[index] && arr[firstChildIndex] && arr[secondChildIndex]) {
+        if (arr[index] < arr[firstChildIndex] && arr[firstChildIndex] > arr[secondChildIndex]) {
+          // console.log('i am first', arr, index, firstChildIndex, secondChildIndex)
+          this.swap(arr, index, firstChildIndex)
+          // console.log('i am first after swap', arr, index, firstChildIndex, secondChildIndex)
+          index = firstChildIndex
+          firstChildIndex = 2 * index + 1
+          secondChildIndex = 2 * index + 2
+        } else {
+          // console.log('i am second', arr, index, firstChildIndex, secondChildIndex)
+          this.swap(arr, index, secondChildIndex)
+          // console.log('i am second after swap', arr, index, firstChildIndex, secondChildIndex)
+          index = secondChildIndex
+          firstChildIndex = 2 * index + 1
+          secondChildIndex = 2 * index + 2
+        }
+      }
+      return this.values
+    }
+    sinkDown(this.values)
+    return max
+  }
+
+}//end heap
+
+// const mbh = new MaxBinaryHeap()
+
+// mbh.insert(41)
+// mbh.insert(39)
+// mbh.insert(33)
+// mbh.insert(18)
+// mbh.insert(27)
+// mbh.insert(12)
+// mbh.insert(55)
+
+
+/*********************************************************************************************************** 
+                                                  Priority Queue
+
+*/
