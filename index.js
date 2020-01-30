@@ -2286,6 +2286,9 @@ keys
   1. Loops through the hash table array and returns an array of keys in the table
     values
   2. Loops through the hash table array and returns an array of values in the table
+
+note: delclaring an array with new, makes empty arrays, these are undefined, so length property
+cannot be used on undefined
 */
 
 class HashTable {
@@ -2355,4 +2358,209 @@ class HashTable {
 
 }//end HashTable
 
-let ht = new HashTable(3)
+// let ht = new HashTable(3)
+
+/*********************************************************************************************************** 
+                                                  Graphs
+graphs
+nodes and connections
+social networks
+location/mapping
+routing
+file system
+vertex - a node
+edge - is the connection
+**
+
+Add a vertex
+  1. Write a method called addVertex, which accepts a name of a vertex
+  2. It should add a key to the adjacency list with the name of the vertex and set its value to be an empty array
+
+Add an edge
+  1. This function should accept two vertices, we can call them vertex1 and vertex2
+  2. The function should find in the adjacency list the key of vertex1 and push vertex2 to the array
+  3. The function should find in the adjacency list the key of vertex2 and push vertex1 to the array
+  4. Don't worry about handling errors/invalid vertices
+
+Removing an edge
+  1. This function should accept two vertices, we'll call them vertex1 and vertex2
+  2. The function should reassign the key of vertex1 to be an array that does not contain vertex2
+  3. The function should reassign the key of vertex2 to be an array that does not contain vertex1
+  4. Don't worry about handling errors/invalid vertices
+
+Removing a vertex
+  1. The function should accept a vertex to remove
+  2. The function should loop as long as there are any other vertices in the adjacency list for that vertex
+  3. Inside of the loop, call our removeEdge function with the vertex we are removing and any values in the adjacency list for that vertex
+  4. delete the key in the adjacency list for that vertex
+*/
+
+/*********************************************************************************************************** 
+                                                  Graph Traversal
+Peer to peer networking
+web crawlers
+finding 'closest'
+matches/recommendations
+shortest path problems
+  gps navigation
+  solving mazes
+  AI (shortest path)
+******************************
+Depth first traversal (recursive)
+  1. The function should accept a starting node
+  2. Create a list to store the end result, to be returned at the very end
+  3. Create an object to store visited vertices
+  4. Create a helper function which accepts a vertex
+    a. The helper function should return early if the vertex is empty
+    b. The helper function should place the vertex it accepts into the visited object and push that vertex into the result array
+    c. Loop over all of the values in the adjacencyList for that vertex
+    d. If any of those values have not been visited, recursively invoke the helper function with that vertex
+  5. Invoke the helper function with the starting vertex
+  6 .Return the result array
+
+Depth first traversal (iterative)
+  1. The function should accept a starting node
+  2. Create a stack to help use keep track of vertices (use a list/array)
+  3. Create a list to store the end result, to be returned at the very end
+  4. Create an object to store visited vertices
+  5. Add the starting vertex to the stack, and mark it visited
+  6. While the stack has something in it:
+    a. Pop the next vertex from the stack
+    b. If that vertex hasn't been visited yet:
+​      1. Mark it as visited
+      2. Add it to the result list
+      3. Push all of its neighbors into the stack
+  7. Return the result array
+
+Breadth first traversal 
+  1. This function should accept a starting vertex
+  2. Create a queue (you can use an array) and place the starting vertex in it
+  3. Create an array to store the nodes visited
+  4. Create an object to store nodes visited
+  5. Mark the starting vertex as visited
+  6. Loop as long as there is anything in the queue
+  7. Remove the first vertex from the queue and push it into the array that stores nodes visited
+  8. Loop over each vertex in the adjacency list for the vertex you are visiting.
+    a. If it is not inside the object that stores nodes visited, mark it as visited and enqueue that vertex
+  9. Once you have finished looping, return the array of visited nodes
+*/
+
+
+class Graph {
+  constructor() {
+    this.adjacencyList = {}
+  }
+
+  addVertex = (key) => {
+    !this.adjacencyList[key] ? this.adjacencyList[key] = [] : false
+  }
+
+  addEdge = (vertex1, vertex2) => {
+    this.adjacencyList[vertex1].push(vertex2)
+    this.adjacencyList[vertex2].push(vertex1)
+  }
+
+  removeEdge(v1, v2) {
+    this.adjacencyList[v1] = this.adjacencyList[v1].filter((list) => !list.includes(v2))
+    this.adjacencyList[v2] = this.adjacencyList[v2].filter((list) => list !== v1)
+  }
+
+  removeVertex(key) {
+    for (let i = this.adjacencyList[key].length-1; i >= 0; i--) {
+      this.removeEdge(this.adjacencyList[key][i], key)
+    }
+    delete this.adjacencyList[key]
+  }
+
+  DFSRecursive = (vertex) => {
+    let list = []
+    let visited = {}
+
+    const DFS = (v) => {
+      if (!v) return null
+      visited[v] = true
+      list.push(v)
+      this.adjacencyList[v].forEach(val => !visited[val] ? DFS(val) : false)
+    }
+    DFS(vertex)
+    return list
+  }
+
+  DFSIterative = (vertex) => {
+    let stack = []
+    let result = []
+    let visited = {}
+    let v
+    
+    stack.push(vertex)
+    visited[vertex] = true
+    
+
+    while (stack.length) {
+      v = stack.pop()
+      result.push(v)
+      this.adjacencyList[v].forEach(val => {
+        if (!visited[val]) {
+          visited[val] = true
+          stack.push(val)
+        }
+      })
+    }
+    return result
+  }
+
+  BFS = (vertex) => {
+    let queue = []
+    let result = []
+    let visited = {}
+    let v
+
+    queue.push(vertex)
+    visited[vertex] = true
+
+    while(queue.length) {
+      v = queue.shift()
+      result.push(v)
+
+      this.adjacencyList[v].forEach(val => {
+        if (!visited[val]) {
+          queue.push(val)
+          visited[val] = true
+        }
+      })
+    }
+    return result
+  }
+}//end graph
+
+let g = new Graph()
+g.addVertex("A")
+g.addVertex("B")
+g.addVertex("C")
+g.addVertex("D")
+g.addVertex("E")
+g.addVertex("F")
+
+g.addEdge("A","B")
+g.addEdge("A","C")
+g.addEdge("B","D")
+g.addEdge("C","E")
+g.addEdge("D","E")
+g.addEdge("D","F")
+g.addEdge("E","F")  
+
+// let graph = new Graph()
+// graph.addVertex('Dallas')
+// graph.addVertex('Tokyo')
+// graph.addVertex('Aspen')
+// graph.addVertex('Los Angeles')
+// graph.addVertex('Hong Kong')
+// graph.addEdge('Dallas', 'Tokyo')
+// graph.addEdge('Dallas', 'Aspen')
+// graph.addEdge('Hong Kong', 'Aspen')
+// graph.addEdge('Hong Kong', 'Tokyo')
+// graph.addEdge('Los Angeles', 'Aspen')
+
+
+
+
