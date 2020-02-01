@@ -2600,6 +2600,51 @@ class WeightedGraph{
     this.adjacencyList[vertex1].push({node: vertex2, weight})
     this.adjacencyList[vertex2].push({node: vertex1, weight})
   }
+  shortestPath(start, end) {
+    let distances = {}
+    let previous = {}
+
+    for (let key in this.adjacencyList) {
+      distances[key] = Infinity
+      previous[key] = null
+    }
+    distances[start] = 0
+    
+    let PQ = new SimPriorityQueue()
+    for (let key in distances) {
+      PQ.enqueue(key, distances[key])
+    }
+
+    while (PQ.values.length) {
+      let removed = PQ.dequeue()
+      if (removed.val === end) return distances[removed.val]
+      this.adjacencyList[removed.val].forEach(val => {
+        if (distances[val.node] > val.weight + distances[removed.val]) {
+          distances[val.node] = val.weight + distances[removed.val]
+          previous[val.node] = removed.val
+          PQ.enqueue(val.node, distances[val.node])
+        }
+      })
+    }
+    return distances
+  }
+}//end weightedGraph
+
+class SimPriorityQueue {
+  constructor() {
+    this.values = []
+  }
+  enqueue(val, priority){
+    this.values.push({val, priority})
+    this.sort()
+  }
+  dequeue (){
+    return this.values.shift()
+  }
+  sort(){
+    this.values.sort((a, b) => a.priority - b.priority)
+  }
+  
 }
 
 let wG = new WeightedGraph()
@@ -2607,7 +2652,15 @@ let wG = new WeightedGraph()
 wG.addVertex('A')
 wG.addVertex('B')
 wG.addVertex('C')
+wG.addVertex('D')
+wG.addVertex('E')
+wG.addVertex('F')
 
-wG.addEdge('A', 'B', 9)
-wG.addEdge('A', 'C', 5)
-wG.addEdge('B', 'C', 7)
+wG.addEdge('A', 'B', 4)
+wG.addEdge('A', 'C', 2)
+wG.addEdge('B', 'E', 3)
+wG.addEdge('C', 'D', 2)
+wG.addEdge('B', 'F', 4)
+wG.addEdge('D', 'E', 3)
+wG.addEdge('D', 'F', 1)
+wG.addEdge('E', 'F', 1)
