@@ -1008,3 +1008,52 @@ Breadth first traversal
 // g.addEdge("D","E")
 // g.addEdge("D","F")
 // g.addEdge("E","F")  
+
+
+/*********************************************************************************************************** 
+                                              Dijkstra's Algorithm
+need to work with a weighted graph
+so it will be similar to a graph, but now the value added is an object
+
+
+Dijkstra's Pseudocode
+  1. This function should accept a starting and ending vertex
+  2. Create an object (we'll call it distances) and set each key to be every 
+      vertex in the adjacency list with a value of infinity, except for the 
+      starting vertex which should have a value of 0
+  3. After setting a value in the distances object, add each vertex with a priority 
+      of Infinity to the priority queue, except the starting vertex, which should 
+      have a priority of 0 because that's where we begin
+  4. Create another object called previous and set each key to be every vertex in 
+      the adjacency list with a value of null
+  5. Start looping as long as there is anything in the priority queue
+    a. dequeue a vertex from the priority queue
+    b. If that vertex is the same as the ending vertex - we are done!
+    c. Otherwise loop through each value in the adjacency list at that vertex
+      d. Calculate the distance to that vertex from the starting vertex
+      e. if the distance is less than what is currently stored in our distances object
+        f. update the distances object with new lower distance
+        g. update the previous object to contain that vertex
+        h. enqueue the vertex with the total distance from the start node
+*/
+
+
+
+// let wG = new WeightedGraph()
+
+// wG.addVertex('A')
+// wG.addVertex('B')
+// wG.addVertex('C')
+// wG.addVertex('D')
+// wG.addVertex('E')
+// wG.addVertex('F')
+
+// wG.addEdge('A', 'B', 4)
+// wG.addEdge('A', 'C', 2)
+// wG.addEdge('B', 'E', 3)
+// wG.addEdge('C', 'D', 2)
+// wG.addEdge('B', 'F', 4)
+// wG.addEdge('D', 'E', 3)
+// wG.addEdge('D', 'F', 1)
+// wG.addEdge('E', 'F', 1)
+

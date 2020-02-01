@@ -2603,30 +2603,40 @@ class WeightedGraph{
   shortestPath(start, end) {
     let distances = {}
     let previous = {}
+    let PQ = new SimPriorityQueue()
+    let removed, nextNode, edge
+    let path = []
 
     for (let key in this.adjacencyList) {
       distances[key] = Infinity
       previous[key] = null
+      PQ.enqueue(key, distances[key])
     }
     distances[start] = 0
     
-    let PQ = new SimPriorityQueue()
-    for (let key in distances) {
-      PQ.enqueue(key, distances[key])
-    }
-
     while (PQ.values.length) {
-      let removed = PQ.dequeue()
-      if (removed.val === end) return distances[removed.val]
-      this.adjacencyList[removed.val].forEach(val => {
-        if (distances[val.node] > val.weight + distances[removed.val]) {
-          distances[val.node] = val.weight + distances[removed.val]
-          previous[val.node] = removed.val
-          PQ.enqueue(val.node, distances[val.node])
+      removed = PQ.dequeue().val
+      // if (removed === end) return distances[removed]
+      if (removed === end) {
+        while (removed) {
+          path.push(removed)
+          removed = previous[removed]
+          // console.log(removed)
+        }
+        break
+      }
+      // console.log(previous)
+      this.adjacencyList[removed].forEach(val => {
+        nextNode = val.node
+        edge = val.weight
+        if (distances[nextNode] > edge + distances[removed]) {
+          distances[nextNode] = edge + distances[removed]
+          previous[nextNode] = removed
+          PQ.enqueue(nextNode, distances[nextNode])
         }
       })
     }
-    return distances
+    return path.reverse()
   }
 }//end weightedGraph
 
