@@ -2651,7 +2651,7 @@ class SimPriorityQueue {
   dequeue (){
     return this.values.shift()
   }
-  sort(){
+  sort(){ 
     this.values.sort((a, b) => a.priority - b.priority)
   }
   
@@ -2678,5 +2678,14 @@ wG.addEdge('E', 'F', 1)
 
 /*********************************************************************************************************** 
                                               Dynamic Programming 
-after restart 
+fib sequence using dynamic programming
 */
+
+
+const betterFib = (n, memo = []) => {
+  if (memo[n] !== undefined) return memo[n]
+  if (n <= 2) return 1
+  let res = betterFib(n-1, memo) + betterFib(n-2, memo)
+  memo[n] = res
+  return res
+}
