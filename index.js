@@ -2678,7 +2678,8 @@ wG.addEdge('E', 'F', 1)
 
 /*********************************************************************************************************** 
                                               Dynamic Programming 
-fib sequence using dynamic programming
+fib sequence using dynamic programming (memoization)
+or we can use tabulated which is better on space complexity
 */
 
 
@@ -2688,4 +2689,13 @@ const betterFib = (n, memo = []) => {
   let res = betterFib(n-1, memo) + betterFib(n-2, memo)
   memo[n] = res
   return res
+}
+
+const tabulatedFib = (n) => {
+  if (n <= 2) return 1
+  let fibNums = [0,1,1]
+  for (let i= 3; i <= n; i++) {
+    fibNums[i] = fibNums[i -1] + fibNums[i-2]
+  }
+  return fibNums[n]
 }
