@@ -1152,3 +1152,8 @@ Dijkstra's Pseudocode
 // wG.addEdge('D', 'F', 1)
 // wG.addEdge('E', 'F', 1)
 
+/*********************************************************************************************************** 
+                                              Dynamic Programming 
+fib sequence using dynamic programming (memoization)
+or we can use tabulated which is better on space complexity
+*/
