@@ -1,3 +1,5 @@
+//Examples section
+
 // function addUpTo(n) {
 //     let total = 0;
 //     for (let i = 1; i <= n; i++) {
@@ -5,7 +7,7 @@
 //     }
 //     return total;
 //   }
-  
+
 //   var t1 = performance.now();
 //   addUpTo(1000000000);
 //   var t2 = performance.now();
@@ -23,25 +25,86 @@
 
 //anagrams 
 //first count the number of chars in the word
+validAnagram = (word1, word2) => {
+    if (word1.length !== word2.length) return false
 
+    //frequency of letters
+    let wordOneLetters = {}
+    let wordTwoLetters = {}
 
-  //frequency of letters
- 
+    for (let char of word1) {
+        wordOneLetters[char] = (wordOneLetters[char] || 0) + 1
+    }
 
-  //is letter of wordOneLetters in wordTwoLetters
+    for (let char of word2) {
+        wordTwoLetters[char] = (wordTwoLetters[char] || 0) + 1
+    }
+
+    //is letter of wordOneLetters in wordTwoLetters
+    for (let key in wordOneLetters) {
+        if (!(key in wordTwoLetters)) {
+            return false
+        }
+        if (wordTwoLetters[key] !== wordOneLetters[key]) {
+            return false
+        }
+    }
+    return true
+}
 
 
 //Multiple pointers pattern O(n^2) needs to be sorted array
+const sumZero = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+            if (arr[i] + arr[j] === 0) {
+                return [arr[i], arr[j]]
+            }
+        }
+    }
+}
 
 // console.log(sumZero([-4, -3, -2, -1, 0, 1, 2, 5]))
 
 //refactored SumZero
-
+const refactoredSumZero = (arr) => {
+    let left = 0
+    let right = arr.length - 1
+    while (left < right) {
+        let sum = arr[left] + arr[right]
+        if (sum === 0) {
+            return [arr[left], arr[right]]
+        } else if (sum > 0) {
+            right--
+        } else {
+            left++
+        }
+    }
+}
 
 // console.log(refactoredSumZero([-4, -3, -2, -1, 0, 1, 2, 3, 10]))
 // console.log(refactoredSumZero([-4, -3, -2, -1, 0, 5, 10]))
 
-
+const countUniqueValues = (arr) => {
+    //get a count of all values
+    let values = 0
+    let left = 0
+    let right = left + 1
+    while (right < arr.length) {
+        if (arr[left] === arr[right]) {
+            right++
+            left++
+        } else if (arr[left] !== arr[right]) {
+            values++
+            right++
+            left++
+        }
+    }
+    if (arr[arr.length - 1] !== arr[arr.length - 2]) {
+        values++
+    }
+    return values
+}
 
 // console.log(countUniqueValues([1,1,1,1,1,2]))
 // console.log(countUniqueValues([1,2,3,4,4,4,7,7,12,12,13]))
@@ -55,7 +118,25 @@ pattern involves creating a window which can either be an array or number from o
 position to another, depending on a certain condition, window either increases or closes
 and a new window is created, useful for keeping track of a subset of data in an array/string */
 
+//naive solution
 
+// const maxSubarraySum = (arr, num) => {
+//   if (num > arr.length) return null
+
+//   let max = -Infinity
+
+//   for (let i = 0; i < arr.length - num + 1; i++) {
+//     temp = 0
+//     for (let j = 0; j < num; j++) {
+//       temp += arr[i + j]
+//     }
+//     if (temp > max) {
+//       max = temp
+//     }
+//     console.log(temp, max)
+//   }
+//   return max
+// }
 
 // console.log(maxSubarraySum([2,6,9,2,1,8,5,6,3], 3))
 // console.log(maxSubarraySum([1,2,5,2,8,1,5], 2))
@@ -66,7 +147,21 @@ and a new window is created, useful for keeping track of a subset of data in an 
 
 //refactored
 
+const refactoredMaxSubarraySum = (arr, num) => {
+    let maxSum = 0
+    let tempSum = 0
+    if (arr.length < num) return null
 
+    for (let i = 0; i < num; i++) {
+        maxSum += arr[i]
+    }
+    tempSum = maxSum
+    for (let i = num; i < arr.length; i++) {
+        tempSum = tempSum - arr[i - num] + arr[i]
+        maxSum = Math.max(maxSum, tempSum)
+    }
+    return maxSum
+}
 
 // console.log(refactoredMaxSubarraySum([2,6,9,2,1,8,5,6,3], 3))
 // console.log(refactoredMaxSubarraySum([1,2,5,2,8,1,5], 2))
@@ -79,6 +174,8 @@ and a new window is created, useful for keeping track of a subset of data in an 
 Pattern involves dividing a data set into smaller chunks and then repeating a process with a
 subset of data, this pattern can tremendously decrease time complexity */
 
+
+// **********************************************************************************************************
 //example with a sorted array
 
 // given an array of integers, write a function that returns the index of that number
@@ -86,7 +183,12 @@ subset of data, this pattern can tremendously decrease time complexity */
 
 //naive solution
 
-
+const search = (arr, val) => {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === val) return i
+    }
+    return -1
+}
 
 // console.log(search([5,6,7,8,15,20], 20))
 
@@ -96,23 +198,87 @@ subset of data, this pattern can tremendously decrease time complexity */
 /* Write a function called sameFrequency
 Given two positive integers, find out if the two numbers have the same frequency of digits */
 
+// const sameFrequency = (num1, num2) => {
+//     // check the length, if not the same, it's not valid
+//     if (num1.length !== num2.length) return
+//     // store the numbers as strings
+//     let numOne = num1.toString().split('')
+//     let numTwo = num2.toString().split('')
+//     // store values in a hash
+//     let numOneHash = {}
+//     let numTwoHash = {}
 
+//     for (let el of numOne) {
+//         numOneHash[el] = (numOneHash[el] || 0) + 1
+//     }
+//     for (let el of numTwo) {
+//         numTwoHash[el] = (numTwoHash[el] || 0) + 1
+//     }
+//     for (let key in numOneHash) {
+//         //compare the values of the hashes
+//         if (numOneHash[key] !== numTwoHash[key]) {
+//             return false
+//         }
+//         //compare that all keys exist in the hashes
+//         if (!key in numTwoHash) {
+//             return false
+//         }
+//     }
+//     return true
+// }
 
 // console.log(sameFrequency(182, 281))
 // console.log(sameFrequency(34, 14))
 // console.log(sameFrequency(3589578, 5879385))
 // console.log(sameFrequency(21, 26))
 
-/* Implement a function called, areThereDuplicates which accepts a 
-variable number of arguments, and checks whether there are any duplicates among the arguments passed in 
+/* Implement a function called, areThereDuplicates which accepts a
+variable number of arguments, and checks whether there are any duplicates among the arguments passed in
 You can solve this using the frequency counter pattern OR the multiple pointers pattern */
 
+//need an array of arguments, so using the spread operator to give me just that
 
+//frequency pattern
+// const areThereDuplicatesFC = (...arguments) => {
+
+//     //store the values in a hash
+//     let valuesHash = {}
+
+//     for (let el of arguments) {
+//         valuesHash[el] = (valuesHash[el] || 0) + 1
+//     }
+
+//     for (let key in valuesHash) {
+//         if (valuesHash[key] > 1) {
+//             return true
+//         }
+//     }
+//     return false
+// }
+
+//multiple pointers pattern
+// const areThereDuplicates = (...args) => {
+//sort the args
+//won't be a normal sort, but values that are the same will be next to each other
+//     args = args.sort()
+//     let left = 0
+//     let right = left + 1
+
+//     while (right < args.length) {
+//         if (args[left] === args[right]) {
+//             return true
+//         } else {
+//             left++
+//             right++
+//         }
+//     }
+//     return false
+// }
 
 // console.log(areThereDuplicates('a', 'b', 'c', 'a'))
-// console.log(areThereDuplicates(1,2,5,8,10,11,12,15,15))
-// console.log(areThereDuplicates(1,2,3))
-// console.log(areThereDuplicates(1,2,2))
+// console.log(areThereDuplicates(1, 2, 5, 8, 10, 11, 12, 15, 15))
+// console.log(areThereDuplicates(1, 2, 3))
+// console.log(areThereDuplicates(1, 2, 2))
 
 // console.log(areThereDuplicatesFC('a', 'b', 'c', 'a'))
 // console.log(areThereDuplicatesFC(1,2,5,8,10,11,12,15,15))
@@ -121,23 +287,56 @@ You can solve this using the frequency counter pattern OR the multiple pointers 
 // console.log(areThereDuplicatesFC(1,2,2))
 
 
-/* Write a function called averagePair 
-Given a sorted array of integers and a target average, determine 
-if there is a pair of values in the array where the average of the 
-pair equals the target average. There may be more than one pair that 
+/* Write a function called averagePair
+Given a sorted array of integers and a target average, determine
+if there is a pair of values in the array where the average of the
+pair equals the target average. There may be more than one pair that
 matches the average target */
 
+// const averagePair = (arr, target) => {
+//     //one end at the beginning of the array, and the other at the end
+//     let start = 0
+//     let end = arr.length - 1
+
+//     while (start < end) {
+//         let avg = (arr[start] + arr[end] / 2)
+//         if (avg === target) return true
+//         if (avg < target) start = start + 1 //move start to right or start++
+//         if (avg > target) end = end - 1 //move end to left or end--
+//     }
+//     return false
+// }
+
+// console.log(averagePair([1, 2, 3], 2.5))
+// console.log(averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8))
 
 
-// console.log(averagePair([1,2,3], 2.5))
-// console.log(averagePair([1,3,3,5,6,7,10,12,19], 8))
-
-
-/* Write a function called isSubsequence  which takes in two strings and checks 
-whether the characters in the first string form a subsequence of the characters 
-in the second string. In other words, the function should check whether the 
+/* Write a function called isSubsequence  which takes in two strings and checks
+whether the characters in the first string form a subsequence of the characters
+in the second string. In other words, the function should check whether the
 characters in the first string appear somewhere in the second string  without
 their order changing */
+
+// const isSubsequence = (first, second) => {
+//     //make the words arrays
+//     first = [...first]
+//     second = [...second]
+
+//     let f = 0
+//     let s = 0
+
+//     while (s < second.length) {
+//         /* if the letters of the first equal the second move them both up
+//         if not move only the second one up
+//         if we have reached the end of the first array we have found
+//         all of the sequence of the first word in the second word */
+//         if (first[f] === second[s]) f++ , s++
+//         else s++
+//         if (f === first.length) return true
+
+//     }
+//     return false
+// }
 
 
 
@@ -147,7 +346,7 @@ their order changing */
 
 /* Given an array of integers and a number, write a function called maxSubarraySum
 which finds the maximum sum of a subarray with the length of the number passed to the function
-Note that a subarray must consist of consecutive  elements from the original array 
+Note that a subarray must consist of consecutive  elements from the original array
 In the first example below, [100, 200, 300] is a subarray of the original array, but [100, 300] is not */
 
 
@@ -159,10 +358,10 @@ In the first example below, [100, 200, 300] is a subarray of the original array,
 // console.log(maxSubarraySum([2, 3], 3))
 
 
-/* Write a function called minSubArrayLen  which accepts two parameters - 
-an array of positive integers and a positive integer. 
-This function should return the minimal length of a contiguous  
-subarray of which the sum is greater than or equal to the integer 
+/* Write a function called minSubArrayLen  which accepts two parameters -
+an array of positive integers and a positive integer.
+This function should return the minimal length of a contiguous
+subarray of which the sum is greater than or equal to the integer
 passed to the function. If there isn't one, return 0 instead */
 
 
@@ -178,7 +377,7 @@ passed to the function. If there isn't one, return 0 instead */
 // console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10], 95)) //0
 
 
-/* write a function findLongestSubstring, which accepts a string and returns the length of the longest 
+/* write a function findLongestSubstring, which accepts a string and returns the length of the longest
 substring with all distinct characters */
 
 
@@ -194,8 +393,8 @@ substring with all distinct characters */
 
 //Recursive coding exercises
 
-/* Write a function called power which accepts a base and an exponent. 
-The function should return the power of the base to the exponent. 
+/* Write a function called power which accepts a base and an exponent.
+The function should return the power of the base to the exponent.
 This function should mimic the functionality of Math.pow */
 
 
@@ -203,8 +402,8 @@ This function should mimic the functionality of Math.pow */
 // console.log(power(2,2))
 // console.log(power(2,4))
 
-/* Write a function factorial which accepts a number and returns 
-the factorial of that number. A factorial is the product of an integer 
+/* Write a function factorial which accepts a number and returns
+the factorial of that number. A factorial is the product of an integer
 and all the integers below it; e.g., factorial four (4!) is equal to 4*3*2*1 = 24
 factorial zero (0!) = 1 */
 
@@ -225,7 +424,7 @@ of numbers and returns the product of them all */
 // console.log(productOfArray([1,2,3])) // 6
 // console.log(productOfArray([1,2,3,10])) // 60
 
-/* Write a fxn called recursiveRange which accepts a number and 
+/* Write a fxn called recursiveRange which accepts a number and
 add up all the numbers from 0 to the number passed to the function */
 
 
@@ -235,9 +434,9 @@ add up all the numbers from 0 to the number passed to the function */
 
 
 /* Write a recursive fxn call fib which acceps a number and returns the
-nth number in the Fibonacci sequence. Recall that the Fibonacci sequence 
-is the sequence of whole numbers 1, 1, 2, 3, 5, 8, ... which starts 
-with 1 and 1, and where every number thereafter is equal to the 
+nth number in the Fibonacci sequence. Recall that the Fibonacci sequence
+is the sequence of whole numbers 1, 1, 2, 3, 5, 8, ... which starts
+with 1 and 1, and where every number thereafter is equal to the
 sum of the previous two numbers. */
 
 
@@ -247,7 +446,7 @@ sum of the previous two numbers. */
 // fib(35) // 9227465
 
 
-/* Write a recursive function called reverse which accepts a string 
+/* Write a recursive function called reverse which accepts a string
 and returns a new string in reverse */
 
 
@@ -380,11 +579,11 @@ an array of all the values in the object that have a typeof string */
 // console.log(collectStrings(obj)) // ["foo", "bar", "baz"])
 
 //exercise 
-/* Write a function called linearSearch  which accepts an array and a value, and returns the 
+/* Write a function called linearSearch  which accepts an array and a value, and returns the
 index at which the value exists. If the value does not exist in the array, return -1. */
 
 
-  
+
   // console.log(linearSearch([10,15,20,25,30], 25))
 
 
@@ -395,24 +594,24 @@ index at which the value exists. If the value does not exist in the array, retur
     1. fxn accepts a sorted array and a value
     2. create a left pointer and a right pointer (start, end) of the array
     3. left < right while looping
-    4. check the middle 
+    4. check the middle
         a. is middle the value you want, return index
         b. is middle < value, move left pointer up
         c. is middle > value, move right pointer down
         d. if value not found, return -1
-*/ 
+*/
 
-/* Write a fxn call binarySearch which accepts a sorterd 
-array and a value and returns the index at which the value 
-exists. Otherwise, return -1. This algorithm should be more 
-efficient than linearSearch - you can read how to implement it here 
-- https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search 
+/* Write a fxn call binarySearch which accepts a sorterd
+array and a value and returns the index at which the value
+exists. Otherwise, return -1. This algorithm should be more
+efficient than linearSearch - you can read how to implement it here
+- https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/binary-search
 and here - https://www.topcoder.com/community/data-science/data-science-tutorials/binary-search/ */
 
 // console.log(binarySearch([1,2,3,4,5,6], 6))
 
-/* pseudocode 
-write a fxn stringSearch 
+/* pseudocode
+write a fxn stringSearch
 
 1. loop over the longer string
 2. loop over the shorter string
@@ -476,23 +675,23 @@ write a fxn stringSearch
 /* Pseudocode to merge Arrays
   1. Create an empty array, take a look at the smallest values in each input array
   2. While there are still values we haven't looked at...
-  3. If the value in the first array is smaller than the value in the second array, 
+  3. If the value in the first array is smaller than the value in the second array,
       push the value in the first array into our results and move on to the next value in the first array
-  4. If the value in the first array is larger than the value in the second array, 
+  4. If the value in the first array is larger than the value in the second array,
       push the value in the second array into our results and move on to the next value in the second array
   5. Once we exhaust one array, push in all remaining values from the other array */
 
-  
+
 
   // console.log(merge([5,42,86], [3,15,90,99]))
   // console.log(merge([1,10,50], [2,14,50,100]))
   // console.log(merge([], [2,14,50,100]))
 
-  /* mergeSort pseudocode 
-  1. Break up the array into halves until you have arrays that are empty or have one element
-  2. Once you have smaller sorted arrays, merge those arrays with other sorted arrays until 
-    you are back at the full length of the array
-  3. Once the array has been merged back together, return the merged (and sorted!) array */
+/* mergeSort pseudocode
+1. Break up the array into halves until you have arrays that are empty or have one element
+2. Once you have smaller sorted arrays, merge those arrays with other sorted arrays until
+  you are back at the full length of the array
+3. Once the array has been merged back together, return the merged (and sorted!) array */
 
 
 
@@ -503,16 +702,16 @@ write a fxn stringSearch
 
 
 
-/* Quick sort 
+/* Quick sort
 we need a helper function, pivot pseudocode:
-  1. accept three arguments: 
-    an array, a start index, and an end index 
-  2. Grab the pivot from the start of the array 
-  3. Store the current pivot index in a variable 
+  1. accept three arguments:
+    an array, a start index, and an end index
+  2. Grab the pivot from the start of the array
+  3. Store the current pivot index in a variable
     (this will keep track of where the pivot should end up)
   4. Loop through the array from the start until the end
-  5. If the pivot is greater than the current element 
-    a. increment the pivot index variable and then swap the current element 
+  5. If the pivot is greater than the current element
+    a. increment the pivot index variable and then swap the current element
       with the element at the pivot index
   6. Swap the starting element (i.e. the pivot) with the pivot index
   7. Return the pivot index */
@@ -523,33 +722,33 @@ we need a helper function, pivot pseudocode:
   // console.log(pivot([26,23,27,44,17,47,39,42,43,1]))
   // console.log(pivot([4,8,2,1,5,7,6,3]))
 
-  /* Call the pivot helper on the array
-  1.When the helper returns to you the updated pivot index, 
-    recursively call the pivot helper on the subarray to the 
-    left of that index, and the subarray to the right of that index
-  2. Your base case occurs when you consider a subarray with less than 2 elements */
+/* Call the pivot helper on the array
+1.When the helper returns to you the updated pivot index,
+  recursively call the pivot helper on the subarray to the
+  left of that index, and the subarray to the right of that index
+2. Your base case occurs when you consider a subarray with less than 2 elements */
 
 
-  
+
 
 // console.log(quickSort([26,23,27,44,17,47,39,42,43,1]))
 
 
 /* In order to perform a radix sort we need some helpers
-first helper is to return the 1s, 10s, 100s and 1000s place and so on 
+first helper is to return the 1s, 10s, 100s and 1000s place and so on
 getDigit(number, place) */
 
 
 
 // console.log(getDigit(7323, 2))
 
-/* second helper we need to know the count of numbers 
+/* second helper we need to know the count of numbers
 digitCount*/
 
 
 /* third helper we need to know the most digits
 mostDigits(nums) - given an array of numbers, return the number of digits
-in the largest numbers in the list 
+in the largest numbers in the list
 digitCount*/
 
 
@@ -563,15 +762,15 @@ digitCount*/
     a. Create buckets for each digit (0 to 9)
     b. place each number in the corresponding bucket based on its kth digit
   4. Replace our existing array with values in our buckets, starting with 0 and going up to 9
-  5. return array at the end! 
+  5. return array at the end!
 */
 
 
 // console.log(radixSort([23, 345, 5467, 12, 2345, 9852]))
 
-/******************************************************************************************************** 
-                                          Data structures 
-Node 
+/********************************************************************************************************
+                                          Data structures
+Node
   piece of data
   reference to the next node
 
@@ -583,9 +782,9 @@ Linked Lists
   pushing psedudocode
     1. This function should accept a value
     2. Create a new node using the value passed to the function
-    3. If there is no head property on the list, 
+    3. If there is no head property on the list,
         a. set the head and tail to be the newly created node
-        b. Otherwise set the next property on the tail to be the new 
+        b. Otherwise set the next property on the tail to be the new
           node and set the tail property on the list to be the newly created node
     4. Increment the length by one
     5. Return the linked list
@@ -597,15 +796,15 @@ Linked Lists
     4. Set the tail to be the 2nd to last node
     5. Decrement the length of the list by 1
     6. Return the value of the node removed
-  
+
   shift pseudocode
     1. If there are no nodes, return undefined
     2. Store the current head property in a variable
     3. Set the head property to be the current head's next property
     4. Decrement the length by 1
     5. Return the value of the node removed
-  
-  unshift psuedoCode 
+
+  unshift psuedoCode
     1. This function should accept a value
     2. Create a new node using the value passed to the function
     3. If there is no head property on the list, set the head and tail to be the newly created node
@@ -618,13 +817,13 @@ Linked Lists
     1. This function should accept an index
     2. If the index is less than zero or greater than or equal to the length of the list, return null
     3. Loop through the list until you reach the index and return the node at that specific index
-  
+
   set pseudocode
     1. This function should accept an index and a value
     2. Use your get function to find the specific node
     3. If the node is not found, return false
     4. If the node is found, set the value of that node to be the value passed to the function and return true
-  
+
   insert pseudocode
     1. If the index is less than zero or greater than the length, return false
     2. If the index is the same as the length, push a new node to the end of the list
@@ -655,8 +854,8 @@ Linked Lists
     8. Set prev to be the value of the node variable
     9. Set the node variable to be the value of the next variable
     10. Once you have finished looping, return the list
-    
-    include this print at the end 
+
+    include this print at the end
     print() {
     let arr = []
     let current = this.head
@@ -670,11 +869,11 @@ Linked Lists
 
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                           Doubly Linked List
 push pseudocode
   1. Create a new node with the value passed to the function
-  2. If the head property is null set the head and tail to be the newly created node 
+  2. If the head property is null set the head and tail to be the newly created node
   3. If not, set the next property on the tail to be that node
   4. Set the previous property on the newly created node to be the tail
   5. Set the tail to be the newly created node
@@ -709,7 +908,7 @@ unshift pseudocode
     b. Set the tail to be the new node
 Otherwise
   3. Set the prev property on the head of the list to be the new node
-  4. Set the next property on the new node to be the head property 
+  4. Set the next property on the new node to be the head property
   5. Update the head to be the new node
   6. Increment the length
   7. Return the list
@@ -735,7 +934,7 @@ insert pseudocode
   3. If the index is the same as the length, push
   4. Use the get method to access the index -1
   5. Set the next and prev properties on the correct nodes to link everything together
-  6. Increment the length 
+  6. Increment the length
   7. Return true
 
 remove pseudocode
@@ -756,18 +955,18 @@ reverse pseudocode
 */
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                                   Stacks
 push pseudocode
   1. The function should accept a value
   2. Create a new node with that value
-  3. If there are no nodes in the stack, set the first and last property to be the newly created node 
+  3. If there are no nodes in the stack, set the first and last property to be the newly created node
   4. If there is at least one node, create a variable that stores the current first property on the stack
   5. Reset the first property to be the newly created node
   6. Set the next property on the node to be the previously created variable
   7. Increment the size of the stack by 1
 
-pop pseudocode 
+pop pseudocode
   1. If there are no nodes in the stack, return null
   2. Create a temporary variable to store the first property on the stack
   3. If there is only 1 node, set the first and last property to be null
@@ -781,8 +980,8 @@ pop pseudocode
 
 
 
-/*********************************************************************************************************** 
-                                                  Queues  
+/***********************************************************************************************************
+                                                  Queues
 enqueue pseudocode
   1. This function accepts some value
   2. Create a new node using that value passed to the function
@@ -794,14 +993,14 @@ enqueue pseudocode
     1. If there is no first property, just return null
     2. Store the first property in a variable
     3. See if the first is the same as the last (check if there is only 1 node). If so, set the first and last to be null
-    4. If there is more than 1 node, set the first property to be the next property of first 
+    4. If there is more than 1 node, set the first property to be the next property of first
     5. Decrement the size by 1
     6. Return the value of the node dequeued
 */
 
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                                   Trees
 lists are linear
 tree are non-linear
@@ -830,7 +1029,7 @@ inserting pseudocode
   2. Starting at the root
     a. Check if there is a root, if not - the root now becomes that new node!
     b. If there is a root, check if the value of the new node is greater than or less than the value of the root
-    c.If it is greater 
+    c.If it is greater
       1. Check to see if there is a node to the right
         a. If there is, move to that node and repeat these steps
         b. If there is not, add that node as the right property
@@ -844,7 +1043,7 @@ find pseudocode
     a. Check if there is a root, if not - we're done searching!
     b. If there is a root, check if the value of the new node is the value we are looking for. If we found it, we're done!
     c. If not, check to see if the value is greater than or less than the value of the root
-    d. If it is greater 
+    d. If it is greater
       1. Check to see if there is a node to the right
         a. If there is, move to that node and repeat these steps
         b. If there is not, we're done searching!
@@ -860,7 +1059,7 @@ find pseudocode
 
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                                   Tree traversal
 two main ways
 1. Breadth-first
@@ -914,8 +1113,8 @@ DFS - Inorder
 
 
 
-/*********************************************************************************************************** 
-                                                  Heaps 
+/***********************************************************************************************************
+                                                  Heaps
 very similar to trees but with different rules
 used to implement priority queues
 and used with graph traversal algorithms
@@ -924,7 +1123,7 @@ to find parent you take n = (n-1)/2 floored
 **Max Binary Heap**
 parent nodes are always larger than child nodes
 no guarantees between siblings (no implied order between siblings)
-compact as possible 
+compact as possible
 left children always filled out first
 
 **Min Binary Heap**
@@ -944,18 +1143,18 @@ insert pseudocode
 extractMax pseudocode
   1. Swap the first value in the values property with the last one
   2. Pop from the values property, so you can return the value at the end.
-  3. Have the new root "sink down" to the correct spot...​
+  3. Have the new root "sink down" to the correct spot...
     a. Your parent index starts at 0 (the root)
     b. Find the index of the left child: 2 * index + 1 (make sure its not out of bounds)
     c. Find the index of the right child: 2*index + 2 (make sure its not out of bounds)
     d. If the left or right child is greater than the element...swap. If both left and right children are larger, swap with the largest child.
-    e. The child index you swapped to now becomes the new parent index.  
+    e. The child index you swapped to now becomes the new parent index.
     f. Keep looping and swapping until neither child is larger than the element.
     g. Return the old root!
 */
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                                   Priority Queue
 Priority Queue
   1. Write a Min Binary Heap - lower number means higher priority
@@ -977,7 +1176,7 @@ Priority Queue
 // ER.enqueue("high fever", 4)
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                                   Hash Tables
 set
   1. Accepts a key and a value
@@ -1000,7 +1199,7 @@ cannot be used on undefined
 */
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                                   Graphs
 graphs
 nodes and connections
@@ -1035,7 +1234,7 @@ Removing a vertex
   4. delete the key in the adjacency list for that vertex
 */
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                                   Graph Traversal
 Peer to peer networking
 web crawlers
@@ -1072,7 +1271,7 @@ Depth first traversal (iterative)
       3. Push all of its neighbors into the stack
   7. Return the result array
 
-Breadth first traversal 
+Breadth first traversal
   1. This function should accept a starting vertex
   2. Create a queue (you can use an array) and place the starting vertex in it
   3. Create an array to store the nodes visited
@@ -1105,7 +1304,7 @@ Breadth first traversal
 // g.addEdge("E","F")  
 
 
-/*********************************************************************************************************** 
+/***********************************************************************************************************
                                               Dijkstra's Algorithm
 need to work with a weighted graph
 so it will be similar to a graph, but now the value added is an object
@@ -1113,13 +1312,13 @@ so it will be similar to a graph, but now the value added is an object
 
 Dijkstra's Pseudocode
   1. This function should accept a starting and ending vertex
-  2. Create an object (we'll call it distances) and set each key to be every 
-      vertex in the adjacency list with a value of infinity, except for the 
+  2. Create an object (we'll call it distances) and set each key to be every
+      vertex in the adjacency list with a value of infinity, except for the
       starting vertex which should have a value of 0
-  3. After setting a value in the distances object, add each vertex with a priority 
-      of Infinity to the priority queue, except the starting vertex, which should 
+  3. After setting a value in the distances object, add each vertex with a priority
+      of Infinity to the priority queue, except the starting vertex, which should
       have a priority of 0 because that's where we begin
-  4. Create another object called previous and set each key to be every vertex in 
+  4. Create another object called previous and set each key to be every vertex in
       the adjacency list with a value of null
   5. Start looping as long as there is anything in the priority queue
     a. dequeue a vertex from the priority queue
