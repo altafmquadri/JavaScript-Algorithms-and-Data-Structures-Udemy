@@ -26,84 +26,84 @@
 //anagrams 
 //first count the number of chars in the word
 validAnagram = (word1, word2) => {
-    if (word1.length !== word2.length) return false
+  if (word1.length !== word2.length) return false
 
-    //frequency of letters
-    let wordOneLetters = {}
-    let wordTwoLetters = {}
+  //frequency of letters
+  let wordOneLetters = {}
+  let wordTwoLetters = {}
 
-    for (let char of word1) {
-        wordOneLetters[char] = (wordOneLetters[char] || 0) + 1
+  for (let char of word1) {
+    wordOneLetters[char] = (wordOneLetters[char] || 0) + 1
+  }
+
+  for (let char of word2) {
+    wordTwoLetters[char] = (wordTwoLetters[char] || 0) + 1
+  }
+
+  //is letter of wordOneLetters in wordTwoLetters
+  for (let key in wordOneLetters) {
+    if (!(key in wordTwoLetters)) {
+      return false
     }
-
-    for (let char of word2) {
-        wordTwoLetters[char] = (wordTwoLetters[char] || 0) + 1
+    if (wordTwoLetters[key] !== wordOneLetters[key]) {
+      return false
     }
-
-    //is letter of wordOneLetters in wordTwoLetters
-    for (let key in wordOneLetters) {
-        if (!(key in wordTwoLetters)) {
-            return false
-        }
-        if (wordTwoLetters[key] !== wordOneLetters[key]) {
-            return false
-        }
-    }
-    return true
+  }
+  return true
 }
 
 
 //Multiple pointers pattern O(n^2) needs to be sorted array
 const sumZero = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr.length; j++) {
-            if (arr[i] + arr[j] === 0) {
-                return [arr[i], arr[j]]
-            }
-        }
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      if (arr[i] + arr[j] === 0) {
+        return [arr[i], arr[j]]
+      }
     }
+  }
 }
 
 // console.log(sumZero([-4, -3, -2, -1, 0, 1, 2, 5]))
 
 //refactored SumZero
 const refactoredSumZero = (arr) => {
-    let left = 0
-    let right = arr.length - 1
-    while (left < right) {
-        let sum = arr[left] + arr[right]
-        if (sum === 0) {
-            return [arr[left], arr[right]]
-        } else if (sum > 0) {
-            right--
-        } else {
-            left++
-        }
+  let left = 0
+  let right = arr.length - 1
+  while (left < right) {
+    let sum = arr[left] + arr[right]
+    if (sum === 0) {
+      return [arr[left], arr[right]]
+    } else if (sum > 0) {
+      right--
+    } else {
+      left++
     }
+  }
 }
 
 // console.log(refactoredSumZero([-4, -3, -2, -1, 0, 1, 2, 3, 10]))
 // console.log(refactoredSumZero([-4, -3, -2, -1, 0, 5, 10]))
 
 const countUniqueValues = (arr) => {
-    //get a count of all values
-    let values = 0
-    let left = 0
-    let right = left + 1
-    while (right < arr.length) {
-        if (arr[left] === arr[right]) {
-            right++
-            left++
-        } else if (arr[left] !== arr[right]) {
-            values++
-            right++
-            left++
-        }
+  //get a count of all values
+  let values = 0
+  let left = 0
+  let right = left + 1
+  while (right < arr.length) {
+    if (arr[left] === arr[right]) {
+      right++
+      left++
+    } else if (arr[left] !== arr[right]) {
+      values++
+      right++
+      left++
     }
-    if (arr[arr.length - 1] !== arr[arr.length - 2]) {
-        values++
-    }
-    return values
+  }
+  if (arr[arr.length - 1] !== arr[arr.length - 2]) {
+    values++
+  }
+  return values
 }
 
 // console.log(countUniqueValues([1,1,1,1,1,2]))
@@ -148,19 +148,19 @@ and a new window is created, useful for keeping track of a subset of data in an 
 //refactored
 
 const refactoredMaxSubarraySum = (arr, num) => {
-    let maxSum = 0
-    let tempSum = 0
-    if (arr.length < num) return null
+  let maxSum = 0
+  let tempSum = 0
+  if (arr.length < num) return null
 
-    for (let i = 0; i < num; i++) {
-        maxSum += arr[i]
-    }
-    tempSum = maxSum
-    for (let i = num; i < arr.length; i++) {
-        tempSum = tempSum - arr[i - num] + arr[i]
-        maxSum = Math.max(maxSum, tempSum)
-    }
-    return maxSum
+  for (let i = 0; i < num; i++) {
+    maxSum += arr[i]
+  }
+  tempSum = maxSum
+  for (let i = num; i < arr.length; i++) {
+    tempSum = tempSum - arr[i - num] + arr[i]
+    maxSum = Math.max(maxSum, tempSum)
+  }
+  return maxSum
 }
 
 // console.log(refactoredMaxSubarraySum([2,6,9,2,1,8,5,6,3], 3))
@@ -184,10 +184,10 @@ subset of data, this pattern can tremendously decrease time complexity */
 //naive solution
 
 const search = (arr, val) => {
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === val) return i
-    }
-    return -1
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === val) return i
+  }
+  return -1
 }
 
 // console.log(search([5,6,7,8,15,20], 20))
@@ -349,10 +349,31 @@ which finds the maximum sum of a subarray with the length of the number passed t
 Note that a subarray must consist of consecutive  elements from the original array
 In the first example below, [100, 200, 300] is a subarray of the original array, but [100, 300] is not */
 
+// const maxSubarraySum = (arr, range) => {
+//   //guard condition against providing a range greater than our array
+//   if (range > arr.length) return null
+//   let max = 0
+//   let sum = 0
+//   //let's assign a max by summing the first numbers in the range
+//   for (let i = 0; i < range; i++) {
+//     max += arr[i]
+//   }
+//   //set max and sum equal for comparison
+//   sum = max
+//   //now that we found max, let's compare all consecutive numbers within the range
+//   //by adding one within range and removing one from the range until the end of the array
+//   for (let i = range; i < arr.length; i++) {
+//     sum += arr[i] - arr[i - range]
+//     //check whether max or sum is greater and assign that value to max
+//     max = Math.max(max, sum)
+//   }
+//   return max
+// }
+
 
 
 // console.log(maxSubarraySum([100, 200, 300, 400], 2))
-// console.log(maxSubarraySum([1, 4, 2, 10, 23, 3, 1, 0 , 20], 4))
+// console.log(maxSubarraySum([1, 4, 2, 10, 23, 3, 1, 0, 20], 4))
 // console.log(maxSubarraySum([-3, 4, 0, -2, 6, -1], 2))
 // console.log(maxSubarraySum([3, -2, 7, -4, 1, -1, 4, -2, 1], 2))
 // console.log(maxSubarraySum([2, 3], 3))
@@ -364,17 +385,45 @@ This function should return the minimal length of a contiguous
 subarray of which the sum is greater than or equal to the integer
 passed to the function. If there isn't one, return 0 instead */
 
+// const minSubArrayLen = (arr, num) => {
+
+//   let left = 0
+//   let right = 0
+//   let sum = 0
+//   let minLen = Infinity
+
+  //divide the numbers into two halves one greater than num
+  //and one smaller than the num
+  //if the number
+  //if smaller than the number keep adding the by moving the right +1
+  //if greater than calculate the length and compare it to the minLen and 
+  //return whichever is smaller, subtract the value of the left from the sum
+  //move left +1 and repeat the steps until the end of the array
+
+//   while (left < arr.length) {
+//     if (sum < num && right < arr.length) {
+//       sum += arr[right]
+//       right++
+//     } else if (sum >= num) {
+//       minLen = Math.min(minLen, right - left)
+//       sum -= arr[left]
+//       left++
+//     } else {
+//       break
+//     }
+//   }
+//   return minLen !== Infinity ? minLen : 0
+// }
 
 
 
-
-// console.log(minSubArrayLen([2,3,1,2,4,3], 7)) //2
-// console.log(minSubArrayLen([2,1,6,5,4], 9)) //2
-// console.log(minSubArrayLen([3,1,7,11,2,9,8,21,62,33,19], 52)) //1
-// console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10], 39)) //3
-// console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10], 55)) //5
-// console.log(minSubArrayLen([4,3,3,8,1,2,3], 11)) //2
-// console.log(minSubArrayLen([1,4,16,22,5,7,8,9,10], 95)) //0
+// console.log(minSubArrayLen([2, 3, 1, 2, 4, 3], 7)) //2
+// console.log(minSubArrayLen([2, 1, 6, 5, 4], 9)) //2
+// console.log(minSubArrayLen([3, 1, 7, 11, 2, 9, 8, 21, 62, 33, 19], 52)) //1
+// console.log(minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 39)) //3
+// console.log(minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 55)) //5
+// console.log(minSubArrayLen([4, 3, 3, 8, 1, 2, 3], 11)) //2
+// console.log(minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 95)) //0
 
 
 /* write a function findLongestSubstring, which accepts a string and returns the length of the longest
