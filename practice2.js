@@ -392,13 +392,13 @@ passed to the function. If there isn't one, return 0 instead */
 //   let sum = 0
 //   let minLen = Infinity
 
-  //divide the numbers into two halves one greater than num
-  //and one smaller than the num
-  //if the number
-  //if smaller than the number keep adding the by moving the right +1
-  //if greater than calculate the length and compare it to the minLen and 
-  //return whichever is smaller, subtract the value of the left from the sum
-  //move left +1 and repeat the steps until the end of the array
+//divide the numbers into two halves one greater than num
+//and one smaller than the num
+//if the number
+//if smaller than the number keep adding the by moving the right +1
+//if greater than calculate the length and compare it to the minLen and 
+//return whichever is smaller, subtract the value of the left from the sum
+//move left +1 and repeat the steps until the end of the array
 
 //   while (left < arr.length) {
 //     if (sum < num && right < arr.length) {
@@ -429,15 +429,30 @@ passed to the function. If there isn't one, return 0 instead */
 /* write a function findLongestSubstring, which accepts a string and returns the length of the longest
 substring with all distinct characters */
 
+const findLongestSubstring = (str) => {
+  let len = 0
+  let freq = {}
+  let index = 0
 
+  for (let i = 0; i < str.length; i++) {
+    let letter = str[i]
+    if (freq[letter]) {
+      index = Math.max(index, freq[letter])
+    }
 
-// console.log(findLongestSubstring('')) //0
-// console.log(findLongestSubstring('rithmschool')) //7
-// console.log(findLongestSubstring('thisisawesome')) //6
-// console.log(findLongestSubstring('thecatinthehat')) //7
-// console.log(findLongestSubstring('bbbbbb')) //1
-// console.log(findLongestSubstring('longestsubstring')) //8
-// console.log(findLongestSubstring('thisishowwedoit')) //6
+    len = Math.max(len, i - index + 1)
+    freq[letter] = i + 1
+  }
+  return len
+}
+
+console.log(findLongestSubstring('')) //0
+console.log(findLongestSubstring('rithmschool')) //7
+console.log(findLongestSubstring('thisisawesome')) //6
+console.log(findLongestSubstring('thecatinthehat')) //7
+console.log(findLongestSubstring('bbbbbb')) //1
+console.log(findLongestSubstring('longestsubstring')) //8
+console.log(findLongestSubstring('thisishowwedoit')) //6
 
 
 //Recursive coding exercises
