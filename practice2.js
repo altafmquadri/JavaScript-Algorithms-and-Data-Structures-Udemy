@@ -455,8 +455,27 @@ substring with all distinct characters */
 //   return len
 // }//still don't understand this
 
+// const findLongestSubstring = s => {
+//   let map = {}
+//   let start = 0
+//   let maxLen = 0
+//   let arr = s.split('')
+
+//   for (i = 0; i < s.length; i++) {
+//     let current = map[arr[i]]
+//     if (current != null && start <= current) {
+//       start = current + 1
+//     } else {
+//       maxLen = Math.max(maxLen, i - start + 1)
+//     }
+
+//     map[arr[i]] = i
+//   }
+
+//   return maxLen
 
 
+// };
 
 // console.log(findLongestSubstring('')) //0
 // console.log(findLongestSubstring('rithmschool')) //7
@@ -474,18 +493,24 @@ substring with all distinct characters */
 The function should return the power of the base to the exponent.
 This function should mimic the functionality of Math.pow */
 
+// const power = (b, e) => {
+//   if (e === 0) return 1
+//   return b * power(b, e - 1)
+// }
 
-// console.log(power(2,0))
-// console.log(power(2,2))
-// console.log(power(2,4))
+// console.log(power(2, 0))
+// console.log(power(2, 2))
+// console.log(power(2, 4))
 
 /* Write a function factorial which accepts a number and returns
 the factorial of that number. A factorial is the product of an integer
 and all the integers below it; e.g., factorial four (4!) is equal to 4*3*2*1 = 24
 factorial zero (0!) = 1 */
 
-
-
+// const factorial = n => {
+//   if (n === 1) return 1
+//   return n * factorial(n - 1)
+// }
 
 // console.log(factorial(1))
 // console.log(factorial(2))
@@ -496,18 +521,24 @@ factorial zero (0!) = 1 */
 /* Write a fxn called productOfArray which takes in an array
 of numbers and returns the product of them all */
 
+// const productOfArray = arr => {
+//   if (!arr.length) return 1
+//   return arr.slice(0, 1) * productOfArray(arr.slice(1))
+// }
 
-
-// console.log(productOfArray([1,2,3])) // 6
-// console.log(productOfArray([1,2,3,10])) // 60
+// console.log(productOfArray([1, 2, 3])) // 6
+// console.log(productOfArray([1, 2, 3, 10])) // 60
 
 /* Write a fxn called recursiveRange which accepts a number and
 add up all the numbers from 0 to the number passed to the function */
 
+// const recursiveRange = n => {
+//   if (n === 0) return 0
+//   return n + recursiveRange(n - 1)
+// }
 
-
-//   console.log(recursiveRange(6)) // 21
-//   console.log(recursiveRange(10)) // 55 
+// console.log(recursiveRange(6)) // 21
+// console.log(recursiveRange(10)) // 55
 
 
 /* Write a recursive fxn call fib which acceps a number and returns the
@@ -516,16 +547,24 @@ is the sequence of whole numbers 1, 1, 2, 3, 5, 8, ... which starts
 with 1 and 1, and where every number thereafter is equal to the
 sum of the previous two numbers. */
 
+// const fib = n => {
+//   if (n <= 2) return 1
+//   return fib(n - 2) + fib(n - 1)
+// }
 
-// fib(4) // 3
-// fib(10) // 55
-// fib(28) // 317811
-// fib(35) // 9227465
+// console.log(fib(4))// 3
+// console.log(fib(10)) // 55
+// console.log(fib(28)) // 317811
+// console.log(fib(35)) // 9227465
 
 
 /* Write a recursive function called reverse which accepts a string
 and returns a new string in reverse */
 
+// const reverse = s => {
+//   if (s.length === 0) return s
+//   return reverse(s.slice(1)) + s[0]
+// }
 
 // console.log(reverse('awesome')) // 'emosewa'
 // console.log(reverse('rithmschool')) // 'loohcsmhtir'
@@ -535,6 +574,15 @@ and returns a new string in reverse */
 /* Write a recursive function isPalindrome which returns true if the string
 passed to it is a palindrome otherwise return false */
 
+// const isPalindrome = s => {
+
+//   const reverse = s => {
+//     if (!s.length) return s
+//     console.log(s)
+//     return reverse(s.slice(1)) + s[0]
+//   }
+//   return s === reverse(s)
+// }
 
 // console.log(isPalindrome('awesome')) // false
 // console.log(isPalindrome('foobar')) // false
@@ -548,31 +596,49 @@ a callback. The function returns true if a single value in the array returns tru
 when passed to the callback. Otherwise it returns false */
 
 // const isOdd = val => val % 2 !== 0 //part of fxn uncomment
+// const someRecursive = (arr, cb) => {
+//   if (!arr.length) return false
+//   if (cb(arr[0])) return true
+//   return someRecursive(arr.slice(1), cb)
+// }
 
-
-
-// console.log(someRecursive([1,2,3,4], isOdd)) // true
-// console.log(someRecursive([4,6,8,9], isOdd)) // true
-// console.log(someRecursive([4,6,8], isOdd)) // false
-// console.log(someRecursive([4,6,8], val => val > 10)) // false
+// console.log(someRecursive([1, 2, 3, 4], isOdd)) // true
+// console.log(someRecursive([4, 6, 8, 9], isOdd)) // true
+// console.log(someRecursive([4, 6, 8], isOdd)) // false
+// console.log(someRecursive([4, 6, 8], val => val > 10)) // false
 
 
 /* Write a recursive fxn which accepts an array of arrays
 and returns a new array with all values flattened */
 
+// const flatten = arr => {
+//   let newArr = []
+//   for (let i = 0; i < arr.length; i++) {
+//     if (Array.isArray(arr[i])) {
+//       newArr = [...newArr, ...flatten(arr[i])]
+//     } else {
+//       newArr.push(arr[i])
+//     }
+//   }
+//   return newArr
+// }
 
-
-// console.log(flatten([1, 2, 3, [4, 5] ])) // [1, 2, 3, 4, 5]
+// console.log(flatten([1, 2, 3, [4, 5]])) // [1, 2, 3, 4, 5]
 // console.log(flatten([1, [2, [3, 4], [[5]]]])) // [1, 2, 3, 4, 5]
-// console.log(flatten([[1],[2],[3]])) // [1,2,3]
+// console.log(flatten([[1], [2], [3]])) // [1,2,3]
 // console.log(flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]])) // [1,2,3]
 
 
 /* Write a recusive fxn called CapitalizeFirst. Given an array of strings,
 capitalize the first letter of each string in the array */
 
+const capitalizeFirst = arr => {
+  if (arr[0[0]] === arr[0][0].toUpperCase()) return arr
+  return capitalizeFirst(slice(1)) + arr[0][0].toUpperCase() + arr[0].slice(1)
+}
 
-// console.log(capitalizeFirst(['car','taco','banana'])) // ['Car','Taco','Banana']
+
+console.log(capitalizeFirst(['car', 'taco', 'banana'])) // ['Car','Taco','Banana']
 
 
 /* Write a recursive function called nestedEvenSum. Return all even numbers
