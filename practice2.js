@@ -429,30 +429,43 @@ passed to the function. If there isn't one, return 0 instead */
 /* write a function findLongestSubstring, which accepts a string and returns the length of the longest
 substring with all distinct characters */
 
-const findLongestSubstring = (str) => {
-  let len = 0
-  let freq = {}
-  let index = 0
+// const findLongestSubstring = (str) => {
+//   let len = 0
+//   let positionLetter = {}
+//   let index = 0
 
-  for (let i = 0; i < str.length; i++) {
-    let letter = str[i]
-    if (freq[letter]) {
-      index = Math.max(index, freq[letter])
-    }
+//   for (let i = 0; i < str.length; i++) {
+//     let letter = str[i]
+//     if (positionLetter[letter]) {
+//       index = Math.max(index, positionLetter[letter])
+//       console.log(positionLetter[letter], 'i am letter in the if', letter)
+//       console.log(index, 'i am index in the if')
+//       console.log(len, 'i am len in the if')
+//       console.log(positionLetter, 'i am positionLetter in the if')
+//     }
 
-    len = Math.max(len, i - index + 1)
-    freq[letter] = i + 1
-  }
-  return len
-}
+//     len = Math.max(len, i - index + 1)
+//     positionLetter[letter] = i + 1
+//     console.log(positionLetter[letter], 'i am letter', letter)
+//     console.log(index, 'i am index')
+//     console.log(len, 'i am len')
+//     console.log(positionLetter, 'i am positionLetter')
 
-console.log(findLongestSubstring('')) //0
-console.log(findLongestSubstring('rithmschool')) //7
-console.log(findLongestSubstring('thisisawesome')) //6
-console.log(findLongestSubstring('thecatinthehat')) //7
-console.log(findLongestSubstring('bbbbbb')) //1
-console.log(findLongestSubstring('longestsubstring')) //8
-console.log(findLongestSubstring('thisishowwedoit')) //6
+//   }
+//   return len
+// }//still don't understand this
+
+
+
+
+// console.log(findLongestSubstring('')) //0
+// console.log(findLongestSubstring('rithmschool')) //7
+// console.log(findLongestSubstring('thisisawesome')) //6
+// console.log(findLongestSubstring('thecatinthehat')) //7
+// console.log(findLongestSubstring('bbbbbb')) //1
+// console.log(findLongestSubstring('longestsubstring')) //8
+// console.log(findLongestSubstring('thisishowwedoit')) //6
+// console.log(findLongestSubstring('isawesome')) //6
 
 
 //Recursive coding exercises
