@@ -640,6 +640,8 @@ const capitalizeFirst = arr => {
 
 console.log(capitalizeFirst(['car', 'taco', 'banana'])) // ['Car','Taco','Banana']
 
+//test from laptop
+
 
 /* Write a recursive function called nestedEvenSum. Return all even numbers
 in an object which may contain nested objects */
