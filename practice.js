@@ -181,7 +181,7 @@ passed to the function. If there isn't one, return 0 instead */
 /* write a function findLongestSubstring, which accepts a string and returns the length of the longest 
 substring with all distinct characters */
 
-
+//cSpell:disable
 
 // console.log(findLongestSubstring('')) //0
 // console.log(findLongestSubstring('rithmschool')) //7
@@ -234,7 +234,7 @@ add up all the numbers from 0 to the number passed to the function */
 //   console.log(recursiveRange(10)) // 55 
 
 
-/* Write a recursive fxn call fib which acceps a number and returns the
+/* Write a recursive fxn call fib which accepts a number and returns the
 nth number in the Fibonacci sequence. Recall that the Fibonacci sequence 
 is the sequence of whole numbers 1, 1, 2, 3, 5, 8, ... which starts 
 with 1 and 1, and where every number thereafter is equal to the 
@@ -266,6 +266,7 @@ passed to it is a palindrome otherwise return false */
 // console.log(isPalindrome('amanaplanacanalpanama')) // true
 // console.log(isPalindrome('amanaplanacanalpandemonium')) // false
 
+//cSpell:enable
 
 /* Write a recursive function called someRecursive which accepts an array and
 a callback. The function returns true if a single value in the array returns true
@@ -292,7 +293,7 @@ and returns a new array with all values flattened */
 // console.log(flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]])) // [1,2,3]
 
 
-/* Write a recusive fxn called CapitalizeFirst. Given an array of strings,
+/* Write a recursive fxn called CapitalizeFirst. Given an array of strings,
 capitalize the first letter of each string in the array */
 
 
@@ -402,7 +403,7 @@ index at which the value exists. If the value does not exist in the array, retur
         d. if value not found, return -1
 */ 
 
-/* Write a fxn call binarySearch which accepts a sorterd 
+/* Write a fxn call binarySearch which accepts a sorted 
 array and a value and returns the index at which the value 
 exists. Otherwise, return -1. This algorithm should be more 
 efficient than linearSearch - you can read how to implement it here 
@@ -430,9 +431,9 @@ write a fxn stringSearch
 
 
 
-/* BubbleSort psudocode (does a swap each time)
+/* BubbleSort pseudocode (does a swap each time)
   1. start looping with a variable called i from the end of the
-    aray towards the beginning
+    array towards the beginning
   2. start an inner loop with a variable called j from the beginning
     until i - 1
   3. if arr[j] > than arr[j+1], swap those two values
@@ -580,7 +581,7 @@ Linked Lists
   connected via nodes with a next pointer
   random access not allowed
 
-  pushing psedudocode
+  pushing pseudocode
     1. This function should accept a value
     2. Create a new node using the value passed to the function
     3. If there is no head property on the list, 
@@ -605,7 +606,7 @@ Linked Lists
     4. Decrement the length by 1
     5. Return the value of the node removed
   
-  unshift psuedoCode 
+  unshift pseudoCode 
     1. This function should accept a value
     2. Create a new node using the value passed to the function
     3. If there is no head property on the list, set the head and tail to be the newly created node
@@ -823,7 +824,7 @@ every node to the right of a parent node is always greater than the parent
 as the number of nodes doubles we only take one step whether inserting or
 finding so it has O(log n) time complexity
 
-if bst is lobsided to only one sided tree, then it's basically a linked list, and it's O(n)
+if bst is lob-sided to only one sided tree, then it's basically a linked list, and it's O(n)
 
 inserting pseudocode
   1. Create a new node
@@ -876,7 +877,7 @@ BFS
   4. Return the variable that stores the values
 
 
-DFS - Preorder
+DFS - Pre-order
   1. Create a variable to store the values of nodes visited
   2. Store the root of the BST in a variable called current
   3. Write a helper function which accepts a node
@@ -886,7 +887,7 @@ DFS - Preorder
   4. Invoke the helper function with the current variable
   5. Return the array of values
 
-DFS - Postorder
+DFS - Post-order
   1. Create a variable to store the values of nodes visited
   2. Store the root of the BST in a variable called current
   3. Write a helper function which accepts a node
@@ -896,7 +897,7 @@ DFS - Postorder
   4. Invoke the helper function with the current variable
   5. Return the array of values
 
-DFS - Inorder
+DFS - In-order
   1. Create a variable to store the values of nodes visited
   2. Store the root of the BST in a variable called current
   3. Write a helper function which accepts a node
@@ -995,7 +996,7 @@ keys
     values
   2. Loops through the hash table array and returns an array of values in the table
 
-note: delclaring an array with new, makes empty arrays, these are undefined, so length property
+note: declaring an array with new, makes empty arrays, these are undefined, so length property
 cannot be used on undefined
 */
 
@@ -1066,10 +1067,11 @@ Depth first traversal (iterative)
   5. Add the starting vertex to the stack, and mark it visited
   6. While the stack has something in it:
     a. Pop the next vertex from the stack
-    b. If that vertex hasn't been visited yet:
-​      1. Mark it as visited
-      2. Add it to the result list
-      3. Push all of its neighbors into the stack
+    b. Push the vertex into the result
+    c. Loop through adjacencyList to check all the neighbors
+​      i. If that neighbor hasn't been visited yet:
+          1. Mark it as visited
+          2. Push the neighbors onto the stack
   7. Return the result array
 
 Breadth first traversal 
